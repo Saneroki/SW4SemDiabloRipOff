@@ -17,6 +17,11 @@
                 <extensions>true</extensions>
                 <configuration>
                     <useOSGiDependencies>true</useOSGiDependencies>
+                    <publicPackages>
+                        <publicPackage>data</publicPackage>
+                        <publicPackage>entityParts</publicPackage>
+                        <publicPackage>services</publicPackage>
+                    </publicPackages>
                 </configuration>
             </plugin>
             <plugin>
