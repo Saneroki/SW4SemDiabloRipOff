@@ -62,12 +62,6 @@
             <version>${netbeans.version}</version>
         </dependency>  
         <!--END of runtime containers addition-->
-        
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>AsteroidsNetBeans-branding</artifactId>
-            <version>${project.version}</version>
-        </dependency>
         <!-- NbModuleSuite functional in RELEASE70 or later: -->
         <dependency>
             <groupId>org.netbeans.api</groupId>
@@ -116,6 +110,11 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>Asteroid</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>Ziablo-branding</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
