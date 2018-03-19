@@ -24,7 +24,7 @@ public class MovingPart
     private float dx, dy;
     private float deceleration, acceleration;
     private float maxSpeed, rotationSpeed;
-    private boolean left, right, up;
+    private boolean left, right, up, down;
 
     public MovingPart(float deceleration, float acceleration, float maxSpeed, float rotationSpeed) {
         this.deceleration = deceleration;
@@ -60,6 +60,10 @@ public class MovingPart
     public void setUp(boolean up) {
         this.up = up;
     }
+    
+    public void setDown(boolean up) {
+        this.down = up;
+    }
 
     @Override
     public void process(GameData gameData, Entity entity) {
@@ -71,17 +75,24 @@ public class MovingPart
 
         // turning
         if (left) {
-            radians += rotationSpeed * dt;
+            dx -= cos(radians - (3.1415f/ 2)) * acceleration * dt;
+            dy -= sin(radians - (3.1415f/ 2)) * acceleration * dt;
         }
 
         if (right) {
-            radians -= rotationSpeed * dt;
+            dx += cos(radians - (3.1415f/ 2)) * acceleration * dt;
+            dy += sin(radians - (3.1415f/ 2)) * acceleration * dt;
         }
 
         // accelerating            
         if (up) {
             dx += cos(radians) * acceleration * dt;
             dy += sin(radians) * acceleration * dt;
+        }
+        
+        if (down){
+            dx -= cos(radians) * acceleration * dt;
+            dy -= sin(radians) * acceleration * dt;
         }
 
         // deccelerating
@@ -152,6 +163,10 @@ public class MovingPart
 
     public boolean isUp() {
         return up;
+    }
+    
+    public boolean isDown() {
+        return down;
     }
 
 }
