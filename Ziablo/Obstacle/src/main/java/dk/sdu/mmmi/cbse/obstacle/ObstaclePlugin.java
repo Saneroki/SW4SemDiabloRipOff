@@ -34,7 +34,7 @@ public class ObstaclePlugin implements IGamePluginService {
         float x = gameData.getDisplayWidth() / 5;
         float y = gameData.getDisplayHeight() / 5;
         float radians = 3.1415f / 2;
-        int life = 1;
+        int life = Integer.MAX_VALUE;
         float lifeExpiration = Float.MAX_VALUE;
         
         
