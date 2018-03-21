@@ -1,4 +1,9 @@
-## Welcome to GitHub Pages
+## Welcome to Ziablo
+
+This is the repoistory for the project game that is being developed by group 11 in the course Component Based Software Engineering.
+
+
+## Creating GitHub Pages
 
 You can use the [editor on GitHub](https://github.com/Saneroki/SW4SemDiabloRipOff/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 
