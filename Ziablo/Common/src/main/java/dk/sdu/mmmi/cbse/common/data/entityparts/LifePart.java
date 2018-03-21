@@ -13,7 +13,7 @@ import dk.sdu.mmmi.cbse.common.data.GameData;
  * @author Someone
  */
 public class LifePart implements EntityPart {
-
+    
     private int life;
     private boolean isHit = false;
     private float expiration;

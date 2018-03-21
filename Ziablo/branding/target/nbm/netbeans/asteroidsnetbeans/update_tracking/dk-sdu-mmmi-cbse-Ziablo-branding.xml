@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><module codename="dk.sdu.mmmi.cbse.Ziablo.branding">
-    <module_version install_time="1521634297216" last="true" origin="installer" specification_version="1.0.1">
+    <module_version install_time="1521638743504" last="true" origin="installer" specification_version="1.0.1">
         <file crc="890164527" name="config/Modules/dk-sdu-mmmi-cbse-Ziablo-branding.xml"/>
-        <file crc="2992245576" name="core/locale/core_asteroidsnetbeans.jar"/>
-        <file crc="2617916622" name="modules/dk-sdu-mmmi-cbse-Ziablo-branding.jar"/>
-        <file crc="1203105618" name="modules/locale/org-netbeans-core-windows_asteroidsnetbeans.jar"/>
-        <file crc="3841352382" name="modules/locale/org-netbeans-core_asteroidsnetbeans.jar"/>
+        <file crc="2675962811" name="core/locale/core_asteroidsnetbeans.jar"/>
+        <file crc="1261924169" name="modules/dk-sdu-mmmi-cbse-Ziablo-branding.jar"/>
+        <file crc="3164725893" name="modules/locale/org-netbeans-core-windows_asteroidsnetbeans.jar"/>
+        <file crc="732976566" name="modules/locale/org-netbeans-core_asteroidsnetbeans.jar"/>
     </module_version>
 </module>

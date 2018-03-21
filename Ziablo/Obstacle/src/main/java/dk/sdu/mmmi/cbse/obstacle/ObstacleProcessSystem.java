@@ -12,6 +12,7 @@ import static dk.sdu.mmmi.cbse.common.data.GameKeys.LEFT;
 import static dk.sdu.mmmi.cbse.common.data.GameKeys.RIGHT;
 import static dk.sdu.mmmi.cbse.common.data.GameKeys.UP;
 import dk.sdu.mmmi.cbse.common.data.World;
+import dk.sdu.mmmi.cbse.common.data.entityparts.LifePart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
@@ -34,31 +35,17 @@ public class ObstacleProcessSystem implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
 
-        for (Entity enemy : world.getEntities(Obstacle.class)) {
-            int i = random.nextInt(100);
-
-            PositionPart positionPart = enemy.getPart(PositionPart.class);
-            MovingPart movingPart = enemy.getPart(MovingPart.class);
+        for (Entity obstacle : world.getEntities(Obstacle.class)) {
             
-            if (i % 2 == 0) {
-                movingPart.setRight(true);
-                movingPart.setLeft(false);
+            PositionPart positionPart = obstacle.getPart(PositionPart.class);
+            MovingPart movingPart = obstacle.getPart(MovingPart.class);
+            LifePart lifePart = obstacle.getPart(LifePart.class);
+            
+            movingPart.process(gameData, obstacle);
+            positionPart.process(gameData, obstacle);
+            lifePart.process(gameData, obstacle);
 
-            } 
-            if (i % 3 == 0) {
-                movingPart.setRight(false);
-                movingPart.setLeft(true);
-            }
-
-            //acceleration/deacceleration
-            if (i % 5 == 0) {
-                movingPart.setUp(true);
-            }
-
-            movingPart.process(gameData, enemy);
-            positionPart.process(gameData, enemy);
-
-            updateShape(enemy);
+            updateShape(obstacle);
         }
 
     }
@@ -71,17 +58,17 @@ public class ObstacleProcessSystem implements IEntityProcessingService {
         float y = positionPart.getY();
         float radians = positionPart.getRadians();
 
-        shapex[0] = (float) (x + Math.cos(radians) * 8);
-        shapey[0] = (float) (y + Math.sin(radians) * 8);
+        shapex[0] = (float) (x + Math.cos(radians + (3.1415f / 5)) * 12);
+        shapey[0] = (float) (y + Math.sin(radians + (3.1415f / 5)) * 12);
 
-        shapex[1] = (float) (x + Math.cos(radians - 4 * 3.1415f / 5) * 8);
-        shapey[1] = (float) (y + Math.sin(radians - 4 * 3.1145f / 5) * 8);
+        shapex[1] = (float) (x + Math.cos(radians - (3.1415f / 5)) * 12);
+        shapey[1] = (float) (y + Math.sin(radians - (3.1415f / 5)) * 12);
 
-        shapex[2] = (float) (x + Math.cos(radians + 3.1415f) * 5);
-        shapey[2] = (float) (y + Math.sin(radians + 3.1415f) * 5);
+        shapex[2] = (float) (x + Math.cos(radians - 4 * 3.1415f / 5) * 12);
+        shapey[2] = (float) (y + Math.sin(radians - 4 * 3.1145f / 5) * 12);
 
-        shapex[3] = (float) (x + Math.cos(radians + 4 * 3.1415f / 5) * 8);
-        shapey[3] = (float) (y + Math.sin(radians + 4 * 3.1415f / 5) * 8);
+        shapex[3] = (float) (x + Math.cos(radians + 4 * 3.1415f / 5) * 12);
+        shapey[3] = (float) (y + Math.sin(radians + 4 * 3.1415f / 5) * 12);
 
         entity.setShapeX(shapex);
         entity.setShapeY(shapey);
