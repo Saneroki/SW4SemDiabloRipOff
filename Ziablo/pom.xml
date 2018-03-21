@@ -66,6 +66,7 @@
         <module>Bullet</module>
         <module>Collision</module>
         <module>Asteroid</module>
+        <module>Obstacle</module>
     </modules>
 
     <properties>
