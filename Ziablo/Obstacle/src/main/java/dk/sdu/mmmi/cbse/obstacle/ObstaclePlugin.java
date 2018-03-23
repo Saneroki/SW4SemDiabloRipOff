@@ -11,6 +11,7 @@ import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.data.entityparts.LifePart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
+import dk.sdu.mmmi.cbse.common.services.ICreateObstacle;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import org.openide.util.lookup.ServiceProvider;
@@ -21,11 +22,12 @@ import org.openide.util.lookup.ServiceProvider;
  */
 
 @ServiceProvider(service = IGamePluginService.class)
-public class ObstaclePlugin implements IGamePluginService {
+public class ObstaclePlugin implements IGamePluginService, ICreateObstacle {
 
     private Entity obstacle;
 
-    private Entity createObstacle(GameData gameData) {
+    @Override
+    public void createObstacle(GameData gameData) {
 
         float deacceleration = 0;
         float acceleration = 0;
@@ -37,20 +39,21 @@ public class ObstaclePlugin implements IGamePluginService {
         int life = Integer.MAX_VALUE;
         float lifeExpiration = Float.MAX_VALUE;
         
+        Obstacle obstacle = new Obstacle();
         
-        Entity obstacle = new Obstacle();
         obstacle.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
         obstacle.add(new PositionPart(x, y, radians));
         obstacle.add(new LifePart(life, lifeExpiration));
         obstacle.setRadius(8);
-
-        return obstacle;
+        
+        this.obstacle = obstacle;
+        
     }
 
     @Override
     public void start(GameData gameData, World world) {
         // Add entities to the world
-        obstacle = createObstacle(gameData);
+        createObstacle(gameData);
         world.addEntity(obstacle);
         System.out.println("dk.sdu.mmmi.cbse.enemy.ObstaclePlugin.start()");
     }

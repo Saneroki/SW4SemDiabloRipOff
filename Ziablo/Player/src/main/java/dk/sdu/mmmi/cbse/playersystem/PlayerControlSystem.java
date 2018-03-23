@@ -55,7 +55,7 @@ public class PlayerControlSystem implements IEntityProcessingService {
             movingPart.setDown(gameData.getKeys().isDown(DOWN));
             
             //Potentially working
-            if (gameData.getKeys().isDown(SPACE)) {
+            if (gameData.getKeys().isPressed(SPACE)) {
                 if (createBullet == null) {
                     instantiateBullet();
                 }
