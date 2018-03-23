@@ -1,4 +1,4 @@
-#Wed Mar 21 14:26:23 CET 2018
+#Fri Mar 23 12:50:27 CET 2018
 org.openide.util.ui.OpenIDE-Module-Install=\u0000
 dk.sdu.mmmi.cbse.Ziablo.branding.OpenIDE-Module-Hide-Classpath-Packages=\u0000
 org.netbeans.api.annotations.common.OpenIDE-Module-Install=\u0000
@@ -56,8 +56,8 @@ dk.sdu.mmmi.cbse.Asteroid.AutoUpdate-Show-In-Client=\u0000
 org.openide.util.lookup.OpenIDE-Module-Deprecated=\u0000
 dk.sdu.mmmi.cbse.Ziablo.branding.AutoUpdate-Show-In-Client=\u0000
 org.netbeans.libs.asm.OpenIDE-Module-Description=\u0000
-org.openide.util.AutoUpdate-Show-In-Client=false
 dk.sdu.mmmi.cbse.Obstacle.AutoUpdate-Show-In-Client=\u0000
+org.openide.util.AutoUpdate-Show-In-Client=false
 org.openide.filesystems.OpenIDE-Module-Install=\u0000
 dk.sdu.mmmi.cbse.Core.OpenIDE-Module-Install=dk/sdu/mmmi/cbse/main/Installer.class
 org.openide.filesystems.OpenIDE-Module-Layer=org/openide/filesystems/resources/layer.xml
@@ -101,8 +101,8 @@ org.netbeans.core.startup.base.OpenIDE-Module-Deprecated=\u0000
 org.openide.util.ui.OpenIDE-Module-Deprecated=\u0000
 dk.sdu.mmmi.cbse.Ziablo.branding.OpenIDE-Module-Install=\u0000
 dk.sdu.mmmi.cbse.Ziablo.branding.OpenIDE-Module-Layer=\u0000
-org.netbeans.api.annotations.common.AutoUpdate-Show-In-Client=false
 dk.sdu.mmmi.cbse.Bullet.AutoUpdate-Show-In-Client=\u0000
+org.netbeans.api.annotations.common.AutoUpdate-Show-In-Client=false
 dk.sdu.mmmi.cbse.Collision.AutoUpdate-Show-In-Client=\u0000
 dk.sdu.mmmi.cbse.Common.OpenIDE-Module-Install=\u0000
 dk.sdu.mmmi.cbse.Common.OpenIDE-Module-Deprecated=\u0000
