@@ -3,8 +3,8 @@ OpenIDE-Module-Localizing-Bundle: dk/sdu/mmmi/cbse/asteroidsnetbeans/b
  randing/Bundle.properties
 AutoUpdate-Essential-Module: true
 OpenIDE-Module-Specification-Version: 1.0.1
-OpenIDE-Module-Implementation-Version: 1.0.1-20180323
-OpenIDE-Module-Build-Version: 201803231149
+OpenIDE-Module-Implementation-Version: 1.0.1-20180403
+OpenIDE-Module-Build-Version: 201804031412
 OpenIDE-Module: dk.sdu.mmmi.cbse.Ziablo.branding
 OpenIDE-Module-Public-Packages: -
 OpenIDE-Module-Requires: org.openide.modules.ModuleFormat1

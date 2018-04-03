@@ -67,6 +67,7 @@
         <module>Collision</module>
         <module>Asteroid</module>
         <module>Obstacle</module>
+        <module>SlimeEnemyCT</module>
     </modules>
 
     <properties>

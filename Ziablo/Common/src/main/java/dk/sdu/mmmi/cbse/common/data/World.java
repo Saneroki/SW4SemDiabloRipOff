@@ -5,12 +5,18 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import javafx.scene.layout.Background;
 
 /**
  *
  * @author jcs
  */
 public class World {
+
+    // TODO - New
+    public static int WORLD_SIZE = 1000;
+    private Background background = null;
+    private int deaths;
 
     private final Map<String, Entity> entityMap = new ConcurrentHashMap<>();
 
@@ -27,6 +33,10 @@ public class World {
         entityMap.remove(entity.getID());
     }
     
+    public void removeKilledEntity(Entity entity){
+        entityMap.remove(entity.getID());
+    }
+
     public Collection<Entity> getEntities() {
         return entityMap.values();
     }
@@ -45,6 +55,31 @@ public class World {
 
     public Entity getEntity(String ID) {
         return entityMap.get(ID);
+    }
+
+    // TODO - Nyt
+    public void setBackground(Background background) {
+        this.background = background;
+    }
+
+    public EntityTexture getBackground() {
+        if (background == null) {
+            return null;
+        } else {
+            return null;//this.background.getTexture();
+        }
+    }
+
+    public void disposeBackground(EntityTexture background) {
+        CommonExtractResource.disposeTexture(background);
+    }
+
+    public float getBackgroundScale() {
+        if (background == null) {
+            return 1f;
+        } else {
+            return 2f; //this.background.getScale();
+        }
     }
 
 }
