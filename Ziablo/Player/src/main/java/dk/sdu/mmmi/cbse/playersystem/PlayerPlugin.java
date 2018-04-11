@@ -7,6 +7,10 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.LifePart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
+import dk.sdu.mmmi.cbse.common.texture.TexturePath;
+import dk.sdu.mmmi.cbse.common.texture.TextureType;
+
+
 import org.openide.util.lookup.ServiceProvider;
 
 @ServiceProvider(service = IGamePluginService.class)
@@ -20,6 +24,9 @@ public class PlayerPlugin implements IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
+        
+        TexturePath idle = new TexturePath("sprite/idle.png", PlayerPlugin.class, TextureType.PLAYER_IDLE);
+        world.addSprite(idle);
         
         // Add entities to the world
         player = createPlayerShip(gameData);

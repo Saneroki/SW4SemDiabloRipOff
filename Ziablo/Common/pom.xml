@@ -21,6 +21,7 @@
                         <publicPackage>dk.sdu.mmmi.cbse.common.data.entityparts</publicPackage>
                         <publicPackage>dk.sdu.mmmi.cbse.common.events</publicPackage>
                         <publicPackage>dk.sdu.mmmi.cbse.common.services</publicPackage>
+                        <publicPackage>dk.sdu.mmmi.cbse.common.texture</publicPackage>
                         <publicPackage>dk.sdu.mmmi.cbse.common.util</publicPackage>
                     </publicPackages>
                 </configuration>
@@ -30,6 +31,15 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
                     <useDefaultManifestFile>true</useDefaultManifestFile>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>

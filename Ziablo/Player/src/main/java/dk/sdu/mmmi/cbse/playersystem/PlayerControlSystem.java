@@ -10,15 +10,9 @@ import static dk.sdu.mmmi.cbse.common.data.GameKeys.DOWN;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
-import dk.sdu.mmmi.cbse.common.events.Event;
 import dk.sdu.mmmi.cbse.common.services.ICreateBullet;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
-import dk.sdu.mmmi.cbse.common.util.SPILocator;
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
-import static java.lang.Math.sqrt;
 import org.openide.util.lookup.ServiceProvider;
-import org.openide.util.lookup.ServiceProviders;
 import org.openide.util.Lookup;
 
 @ServiceProvider(service = IEntityProcessingService.class)
@@ -55,7 +49,8 @@ public class PlayerControlSystem implements IEntityProcessingService {
             movingPart.setDown(gameData.getKeys().isDown(DOWN));
             
             //Potentially working
-            if (gameData.getKeys().isPressed(SPACE)) {
+            if (gameData.getKeys().isDown(SPACE)) {
+                System.out.println("pew pew");
                 if (createBullet == null) {
                     instantiateBullet();
                 }
