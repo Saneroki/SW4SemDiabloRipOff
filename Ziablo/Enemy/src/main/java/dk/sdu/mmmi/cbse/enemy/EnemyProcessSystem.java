@@ -16,6 +16,7 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
+import dk.sdu.mmmi.cbse.commonenemy.Enemy;
 import static java.lang.Math.random;
 import java.util.Random;
 import org.openide.util.lookup.ServiceProvider;

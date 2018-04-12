@@ -18,12 +18,12 @@ public class TexturePath implements Serializable{
       
       private final String resource;
       private final Class module;
-      private final TextureType type;
+      private final Class service;
       
-      public TexturePath(String resource, Class module, TextureType type){
+      public TexturePath(String resource, Class module, Class service){
           this.resource = resource;
           this.module = module;
-          this.type = type;
+          this.service = service;
       }
 
     public String getID() {
@@ -37,8 +37,9 @@ public class TexturePath implements Serializable{
     public Class getModule() {
         return module;
     }
-      
-    public TextureType getType(){
-        return type;
+    
+    public Class getService() {
+        return service;
     }
+      
 }

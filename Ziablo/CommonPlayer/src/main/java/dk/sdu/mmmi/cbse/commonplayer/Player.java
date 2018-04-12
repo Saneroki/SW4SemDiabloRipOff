@@ -3,15 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dk.sdu.mmmi.cbse.enemy;
+package dk.sdu.mmmi.cbse.commonplayer;
 
 import dk.sdu.mmmi.cbse.common.data.Entity;
 
-
 /**
  *
- * @author Sadik
+ * @author Sahin
  */
-public class Enemy extends Entity{
+public class Player extends Entity{
     
 }

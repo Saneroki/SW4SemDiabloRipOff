@@ -15,6 +15,8 @@ import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
+import dk.sdu.mmmi.cbse.commonenemy.Enemy;
+import dk.sdu.mmmi.cbse.commonplayer.Player;
 import dk.sdu.mmmi.cbse.managers.GameInputProcessor;
 import dk.sdu.mmmi.cbse.textureloader.TextureLoader;
 import java.util.ArrayList;
@@ -104,12 +106,14 @@ public class Game
         for (int i = 0; i <= world.getSortedListOfEntities().size() - 1; i++) {
             Entity e = world.getSortedListOfEntities().get(i);
 
-            if (e instanceof Entity) {
-//                if (TextureLoader.playerLoaded()) {
+            if (e.getClass() == Enemy.class) {
                 PositionPart p = e.getPart(PositionPart.class);
                 batch.draw(drawTextureRegion(TextureLoader.player_idle),
                         p.getX(), p.getY());
-//                }
+            } else if (e.getClass() == Player.class) {
+                PositionPart p = e.getPart(PositionPart.class);
+                batch.draw(drawTextureRegion(TextureLoader.enemy_idle),
+                        p.getX(), p.getY());
             }
 
         }

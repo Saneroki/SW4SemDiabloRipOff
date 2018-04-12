@@ -68,6 +68,8 @@
         <module>Asteroid</module>
         <module>Obstacle</module>
         <module>Map</module>
+        <module>CommonEnemy</module>
+        <module>CommonPlayer</module>
     </modules>
 
     <properties>
