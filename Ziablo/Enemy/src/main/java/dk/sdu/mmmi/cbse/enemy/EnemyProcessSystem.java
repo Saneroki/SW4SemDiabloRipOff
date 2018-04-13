@@ -41,20 +41,20 @@ public class EnemyProcessSystem implements IEntityProcessingService {
             PositionPart positionPart = enemy.getPart(PositionPart.class);
             MovingPart movingPart = enemy.getPart(MovingPart.class);
             
-            if (i % 2 == 0) {
-                movingPart.setRight(true);
-                movingPart.setLeft(false);
-
-            } 
-            if (i % 3 == 0) {
-                movingPart.setRight(false);
-                movingPart.setLeft(true);
-            }
-
-            //acceleration/deacceleration
-            if (i % 5 == 0) {
-                movingPart.setUp(true);
-            }
+//            if (i % 2 == 0) {
+//                movingPart.setRight(true);
+//                movingPart.setLeft(false);
+//
+//            } 
+//            if (i % 3 == 0) {
+//                movingPart.setRight(false);
+//                movingPart.setLeft(true);
+//            }
+//
+//            //acceleration/deacceleration
+//            if (i % 5 == 0) {
+//                movingPart.setUp(true);
+//            }
 
             movingPart.process(gameData, enemy);
             positionPart.process(gameData, enemy);

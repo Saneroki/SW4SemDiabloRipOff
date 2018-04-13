@@ -70,6 +70,7 @@
         <module>Map</module>
         <module>CommonEnemy</module>
         <module>CommonPlayer</module>
+        <module>AI/AI</module>
     </modules>
 
     <properties>

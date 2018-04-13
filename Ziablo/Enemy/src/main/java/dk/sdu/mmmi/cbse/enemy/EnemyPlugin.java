@@ -30,9 +30,9 @@ public class EnemyPlugin implements IGamePluginService {
 
     private Entity createEnemyShip(GameData gameData) {
 
-        float deacceleration = 10;
+        float deacceleration = 900;
         float acceleration = 50;
-        float maxSpeed = 30;
+        float maxSpeed = 10;
         float rotationSpeed = 2;
         float x = gameData.getDisplayWidth() / 3;
         float y = gameData.getDisplayHeight() / 3;
