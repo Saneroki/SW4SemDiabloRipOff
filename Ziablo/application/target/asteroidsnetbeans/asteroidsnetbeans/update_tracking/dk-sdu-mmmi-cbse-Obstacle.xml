@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><module codename="dk.sdu.mmmi.cbse.Obstacle">
-    <module_version install_time="1523621115295" last="true" origin="installer" specification_version="1.0.1">
+    <module_version install_time="1523623857725" last="true" origin="installer" specification_version="1.0.1">
         <file crc="900292746" name="config/Modules/dk-sdu-mmmi-cbse-Obstacle.xml"/>
-        <file crc="1912099519" name="modules/dk-sdu-mmmi-cbse-Obstacle.jar"/>
+        <file crc="3673341226" name="modules/dk-sdu-mmmi-cbse-Obstacle.jar"/>
     </module_version>
 </module>

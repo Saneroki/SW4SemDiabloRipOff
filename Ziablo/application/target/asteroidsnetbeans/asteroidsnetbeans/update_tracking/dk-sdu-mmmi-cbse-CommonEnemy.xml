@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><module codename="dk.sdu.mmmi.cbse.CommonEnemy">
-    <module_version install_time="1523621115143" last="true" origin="installer" specification_version="1.0.1">
+    <module_version install_time="1523623857553" last="true" origin="installer" specification_version="1.0.1">
         <file crc="2790276334" name="config/Modules/dk-sdu-mmmi-cbse-CommonEnemy.xml"/>
-        <file crc="1255315993" name="modules/dk-sdu-mmmi-cbse-CommonEnemy.jar"/>
+        <file crc="866452033" name="modules/dk-sdu-mmmi-cbse-CommonEnemy.jar"/>
     </module_version>
 </module>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><module codename="dk.sdu.mmmi.cbse.AI">
-    <module_version install_time="1523621115313" last="true" origin="installer" specification_version="1.0.1">
+    <module_version install_time="1523623857741" last="true" origin="installer" specification_version="1.0.1">
         <file crc="3172769019" name="config/Modules/dk-sdu-mmmi-cbse-AI.xml"/>
-        <file crc="1123750189" name="modules/dk-sdu-mmmi-cbse-AI.jar"/>
+        <file crc="2658678410" name="modules/dk-sdu-mmmi-cbse-AI.jar"/>
     </module_version>
 </module>
