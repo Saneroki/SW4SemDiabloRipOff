@@ -30,11 +30,11 @@ public class PlayerPlugin implements IGamePluginService {
         world.addSprite(idle);
         
         // Add entities to the world
-        player = createPlayerShip(gameData);
+        player = createPlayer(gameData);
         world.addEntity(player);
     }
 
-    private Entity createPlayerShip(GameData gameData) {
+    private Entity createPlayer(GameData gameData) {
 
         float deacceleration = 10;
         float acceleration = 200;
@@ -44,12 +44,12 @@ public class PlayerPlugin implements IGamePluginService {
         float y = gameData.getDisplayHeight() / 2;
         float radians = 3.1415f / 2;
         
-        Entity playerShip = new Player();
-        playerShip.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
-        playerShip.add(new PositionPart(x, y, radians));
-        playerShip.add(new LifePart(3, Float.MAX_VALUE));
+        Entity player = new Player();
+        player.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
+        player.add(new PositionPart(x, y, radians));
+        player.add(new LifePart(3, Float.MAX_VALUE));
         
-        return playerShip;
+        return player;
     }
 
     @Override

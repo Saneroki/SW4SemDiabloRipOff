@@ -12,6 +12,13 @@ public class GameInputProcessor extends InputAdapter {
     public GameInputProcessor(GameData gameData) {
         this.gameData = gameData;
     }
+    
+     @Override
+    public boolean mouseMoved(int screenX, int screenY){
+        screenY = gameData.getDisplayHeight() - screenY;
+        gameData.setMousePosition(screenX, screenY);
+        return true;
+    }
 
 	public boolean keyDown(int k) {
 		if(k == Keys.UP) {

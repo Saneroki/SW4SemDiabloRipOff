@@ -11,8 +11,36 @@ public class GameData {
     private int displayWidth;
     private int displayHeight;
     private final GameKeys keys = new GameKeys();
+    private int[] mousePosition;
+    private Object camera;
     private List<Event> events = new CopyOnWriteArrayList<>();
 
+    public GameData(){
+        mousePosition = new int[2];
+        setMousePosition(0,0); // To avoid Null Pointer exception if no mouse is found
+    }
+    
+    public void setMousePosition(int screenX, int screenY) {
+        mousePosition[0] = screenX;
+        mousePosition[1] = screenY;
+    }
+
+    public int getMousePositionX() {
+        return mousePosition[0];
+    }
+
+    public int getMousePositionY() {
+        return mousePosition[1];
+    }
+
+    public Object getCamera() {
+        return camera;
+    }
+
+    public void setCamera(Object camera) {
+        this.camera = camera;
+    }
+    
     public void addEvent(Event e) {
         events.add(e);
     }

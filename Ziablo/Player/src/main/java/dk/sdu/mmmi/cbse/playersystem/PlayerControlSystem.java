@@ -25,6 +25,8 @@ import org.openide.util.Lookup;
 public class PlayerControlSystem implements IEntityProcessingService {
 
     private ICreateBullet createBullet;
+    private PositionPart positionPart;
+    private boolean dragging;
 
     /**
      * Use SPILocator (or netbeans Lookup) to find all implementations of the
@@ -41,17 +43,18 @@ public class PlayerControlSystem implements IEntityProcessingService {
     public void process(GameData gameData, World world) {
 
         for (Entity player : world.getEntities(Player.class)) {
-            PositionPart positionPart = player.getPart(PositionPart.class);
-            MovingPart movingPart = player.getPart(MovingPart.class);
+            positionPart = player.getPart(PositionPart.class);
+            MovingPart movement = player.getPart(MovingPart.class);
 
-            movingPart.setLeft(gameData.getKeys().isDown(LEFT));
-            movingPart.setRight(gameData.getKeys().isDown(RIGHT));
-            movingPart.setUp(gameData.getKeys().isDown(UP));
-            movingPart.setDown(gameData.getKeys().isDown(DOWN));
+            movement.setLeft(gameData.getKeys().isDown(LEFT));
+            movement.setRight(gameData.getKeys().isDown(RIGHT));
+            movement.setUp(gameData.getKeys().isDown(UP));
+            movement.setDown(gameData.getKeys().isDown(DOWN));
+            positionPart.setRadians(setPlayerRotation(gameData));
             
             //Potentially working
             if (gameData.getKeys().isDown(SPACE)) {
-                System.out.println("pew pew");
+                System.out.print("pew pew   -   ");
                 if (createBullet == null) {
                     instantiateBullet();
                 }
@@ -61,10 +64,10 @@ public class PlayerControlSystem implements IEntityProcessingService {
                     System.out.println("Null bullets" + e);
                 }
             }
-
-            movingPart.process(gameData, player);
+            //positionPart.setRadians(180);
+            movement.process(gameData, player);
             positionPart.process(gameData, player);
-
+            
             updateShape(player);
         }
     }
@@ -72,8 +75,7 @@ public class PlayerControlSystem implements IEntityProcessingService {
     private void updateShape(Entity entity) {
         float[] shapex = entity.getShapeX();
         float[] shapey = entity.getShapeY();
-        PositionPart positionPart = entity.getPart(PositionPart.class
-        );
+        positionPart = entity.getPart(PositionPart.class);
         float x = positionPart.getX();
         float y = positionPart.getY();
         float radians = positionPart.getRadians();
@@ -93,5 +95,11 @@ public class PlayerControlSystem implements IEntityProcessingService {
         entity.setShapeX(shapex);
         entity.setShapeY(shapey);
     }
+    
+    private float setPlayerRotation(GameData gameData) {
+        float angle = (float) Math.atan2(gameData.getMousePositionY() - positionPart.getY(), gameData.getMousePositionX() - positionPart.getX());
+        return angle;
+    }
+
 
 }
