@@ -1,4 +1,4 @@
-#Wed Apr 18 10:31:51 CEST 2018
+#Wed Apr 18 16:19:04 CEST 2018
 dk.sdu.mmmi.cbse.CommonEnemy.OpenIDE-Module-Hide-Classpath-Packages=\u0000
 dk.sdu.mmmi.cbse.Common.OpenIDE-Module-Description=\u0000
 dk.sdu.mmmi.cbse.Common.AutoUpdate-Show-In-Client=\u0000
@@ -29,8 +29,8 @@ dk.sdu.mmmi.cbse.Bullet.AutoUpdate-Show-In-Client=\u0000
 dk.sdu.mmmi.cbse.AI.OpenIDE-Module-Description=\u0000
 dk.sdu.mmmi.cbse.Enemy.OpenIDE-Module-Layer=\u0000
 dk.sdu.mmmi.cbse.Core.OpenIDE-Module-Install=dk/sdu/mmmi/cbse/main/Installer.class
-dk.sdu.mmmi.cbse.CommonBullet.AutoUpdate-Show-In-Client=\u0000
 dk.sdu.mmmi.cbse.Bullet.OpenIDE-Module-Deprecated=\u0000
+dk.sdu.mmmi.cbse.CommonBullet.AutoUpdate-Show-In-Client=\u0000
 org.openide.util.ui.OpenIDE-Module-Deprecated=\u0000
 dk.sdu.mmmi.cbse.Obstacle.OpenIDE-Module-Layer=\u0000
 dk.sdu.mmmi.cbse.Asteroid.OpenIDE-Module-Layer=\u0000

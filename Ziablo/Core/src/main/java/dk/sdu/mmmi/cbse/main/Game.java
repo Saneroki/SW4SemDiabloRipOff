@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
@@ -28,7 +31,10 @@ import org.openide.util.Lookup;
 
 public class Game
         implements ApplicationListener {
-
+    
+    private TiledMap map;
+    private OrthogonalTiledMapRenderer renderer;
+    
     private static OrthographicCamera cam;
     private ShapeRenderer sr;
     private SpriteBatch batch;
@@ -65,6 +71,9 @@ public class Game
         for (IGamePluginService iGamePlugin : getPluginServices()) {
             iGamePlugin.start(gameData, world);
         }
+        
+        map = new TmxMapLoader().load("maps/woodMap.tmx");
+        renderer = new OrthogonalTiledMapRenderer(map);
     }
 
     @Override
@@ -75,7 +84,7 @@ public class Game
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         gameData.setDelta(Gdx.graphics.getDeltaTime());
-
+        
         draw();
 
         gameData.getKeys().update();
@@ -114,6 +123,7 @@ public class Game
                         p.getX(), p.getY());
             } else if (e.getClass() == Player.class) {
                 PositionPart p = e.getPart(PositionPart.class);
+            //    cam.position.set(p.getX(), p.getY(), 0);
                 batch.draw(drawTextureRegion(TextureLoader.player_idle),
                         p.getX(), p.getY());
             } else if (e.getClass() == Bullet.class) {
@@ -138,6 +148,10 @@ public class Game
     }
 
     private void draw() {
+        
+        renderer.setView(cam);
+        renderer.render();
+        
         for (Entity entity : world.getEntities()) {
 
             sr.setColor(1, 1, 1, 1);
