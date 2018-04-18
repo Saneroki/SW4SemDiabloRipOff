@@ -71,6 +71,8 @@
         <module>CommonEnemy</module>
         <module>CommonPlayer</module>
         <module>AI/AI</module>
+        <module>CommonObstacle</module>
+        <module>CommonBullet</module>
     </modules>
 
     <properties>

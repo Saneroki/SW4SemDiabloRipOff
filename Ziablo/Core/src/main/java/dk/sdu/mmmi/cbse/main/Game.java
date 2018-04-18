@@ -15,7 +15,9 @@ import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
+import dk.sdu.mmmi.cbse.commonbullet.Bullet;
 import dk.sdu.mmmi.cbse.commonenemy.Enemy;
+import dk.sdu.mmmi.cbse.commonobstacle.Obstacle;
 import dk.sdu.mmmi.cbse.commonplayer.Player;
 import dk.sdu.mmmi.cbse.managers.GameInputProcessor;
 import dk.sdu.mmmi.cbse.textureloader.TextureLoader;
@@ -108,12 +110,20 @@ public class Game
 
             if (e.getClass() == Enemy.class) {
                 PositionPart p = e.getPart(PositionPart.class);
-                batch.draw(drawTextureRegion(TextureLoader.player_idle),
+                batch.draw(drawTextureRegion(TextureLoader.enemy_idle),
                         p.getX(), p.getY());
             } else if (e.getClass() == Player.class) {
                 PositionPart p = e.getPart(PositionPart.class);
-                batch.draw(drawTextureRegion(TextureLoader.enemy_idle),
+                batch.draw(drawTextureRegion(TextureLoader.player_idle),
                         p.getX(), p.getY());
+            } else if (e.getClass() == Bullet.class) {
+                PositionPart p = e.getPart(PositionPart.class);
+                batch.draw(drawTextureRegion(TextureLoader.projectile),
+                        p.getX() - e.getRadius(), p.getY() - e.getRadius());
+            } else if (e.getClass() == Obstacle.class) {
+                PositionPart p = e.getPart(PositionPart.class);
+                batch.draw(drawTextureRegion(TextureLoader.obstacle),
+                        p.getX() - e.getRadius(), p.getY() - e.getRadius());
             }
 
         }

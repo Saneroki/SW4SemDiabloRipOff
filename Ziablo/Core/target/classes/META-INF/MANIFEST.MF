@@ -3,8 +3,8 @@ OpenIDE-Module-Install: dk/sdu/mmmi/cbse/main/Installer.class
 OpenIDE-Module-Localizing-Bundle: dk/sdu/mmmi/cbse/core/Bundle.propert
  ies
 OpenIDE-Module-Specification-Version: 1.0.1
-OpenIDE-Module-Implementation-Version: 1.0.1-20180413
-OpenIDE-Module-Build-Version: 201804131250
+OpenIDE-Module-Implementation-Version: 1.0.1-20180418
+OpenIDE-Module-Build-Version: 201804180830
 OpenIDE-Module: dk.sdu.mmmi.cbse.Core
 OpenIDE-Module-Public-Packages: -
 OpenIDE-Module-Requires: org.openide.modules.ModuleFormat1
@@ -42,5 +42,6 @@ Maven-Class-Path: com.badlogicgames.gdx:gdx:1.5.0 com.badlogicgames.gd
 OpenIDE-Module-Module-Dependencies: org.netbeans.api.annotations.commo
  n/1 > 1.27.1, dk.sdu.mmmi.cbse.Common > 1.0.1, org.openide.modules > 
  7.48.1, org.openide.util.lookup > 8.33.1, dk.sdu.mmmi.cbse.CommonEnem
- y > 1.0.1, dk.sdu.mmmi.cbse.CommonPlayer > 1.0.1
+ y > 1.0.1, dk.sdu.mmmi.cbse.CommonPlayer > 1.0.1, dk.sdu.mmmi.cbse.Co
+ mmonObstacle > 1.0.1, dk.sdu.mmmi.cbse.CommonBullet > 1.0.1
 

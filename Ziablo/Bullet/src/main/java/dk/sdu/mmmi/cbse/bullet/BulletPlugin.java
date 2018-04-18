@@ -13,8 +13,10 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.ICreateBullet;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
+import dk.sdu.mmmi.cbse.common.texture.TexturePath;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
+import dk.sdu.mmmi.cbse.commonbullet.Bullet;
 
 /**
  *
@@ -33,6 +35,8 @@ public class BulletPlugin implements IGamePluginService, ICreateBullet {
 
     @Override
     public void start(GameData gameData, World world) {
+        TexturePath idle = new TexturePath("sprite/orb.png", BulletPlugin.class, Bullet.class);
+        world.addSprite(idle);
         System.out.println("dk.sdu.mmmi.cbse.bullet.BulletPlugin.start()");
     }
 

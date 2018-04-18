@@ -17,7 +17,9 @@ import java.io.InputStream;
 import dk.sdu.mmmi.cbse.common.texture.TexturePath;
 import dk.sdu.mmmi.cbse.common.texture.TextureType;
 import dk.sdu.mmmi.cbse.common.data.World;
+import dk.sdu.mmmi.cbse.commonbullet.Bullet;
 import dk.sdu.mmmi.cbse.commonenemy.Enemy;
+import dk.sdu.mmmi.cbse.commonobstacle.Obstacle;
 import dk.sdu.mmmi.cbse.commonplayer.Player;
 import static dk.sdu.mmmi.cbse.textureloader.ComponentAnimator.ComponentAnimator;
 
@@ -32,7 +34,11 @@ public class TextureLoader {
     public static Animation player_idle;
 
     public static Animation enemy_idle;
-    
+
+    public static Animation projectile;
+
+    public static Animation obstacle;
+
     private static boolean enemy = false;
 
     private static boolean player = false;
@@ -44,25 +50,30 @@ public class TextureLoader {
     public static void loadRenderingMaterial(World gameworld) {
         if (!gameworld.getSprites().isEmpty()) {
             for (TexturePath sheet : gameworld.getSprites()) {
-                /**
-                 * 1*
-                 */
+
                 if (sheet.getService().equals(Enemy.class)) {
+                    enemy_idle = ComponentAnimator(loadTexture(sheet.getModule(), sheet.getResource()), 1, 4, 3f);
+                    System.out.println("Texture animation: " + enemy_idle + " " + sheet.getModule());
+                    gameworld.removeSprite(sheet);
+                }
+
+                if (sheet.getService().equals(Player.class)) {
                     player_idle = ComponentAnimator(loadTexture(sheet.getModule(), sheet.getResource()), 1, 4, 3f);
                     System.out.println("Texture animation: " + player_idle + " " + sheet.getModule());
                     gameworld.removeSprite(sheet);
                 }
                 
-                if (sheet.getService().equals(Player.class)) {
-                    enemy_idle = ComponentAnimator(loadTexture(sheet.getModule(), sheet.getResource()), 1, 4, 3f);
-                    System.out.println("Texture animation: " + enemy_idle + " " + sheet.getModule());
+                if (sheet.getService().equals(Bullet.class)) {
+                    projectile = ComponentAnimator(loadTexture(sheet.getModule(), sheet.getResource()), 1, 4, 3f);
+                    System.out.println("Texture animation: " + projectile + " " + sheet.getModule());
                     gameworld.removeSprite(sheet);
                 }
                 
-                
-//                player_idle = ComponentAnimator(loadTexture(sheet.getModule(), sheet.getResource()), 1, 4, 3f);
-//                System.out.println("Texture animation: " + player_idle + " " + sheet.getModule());
-//                gameworld.removeSprite(sheet);
+                if (sheet.getService().equals(Obstacle.class)) {
+                    obstacle = ComponentAnimator(loadTexture(sheet.getModule(), sheet.getResource()), 1, 4, 3f);
+                    System.out.println("Texture animation: " + obstacle + " " + sheet.getModule());
+                    gameworld.removeSprite(sheet);
+                }
 
             }
         }
