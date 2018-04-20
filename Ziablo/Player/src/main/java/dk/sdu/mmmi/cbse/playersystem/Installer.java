@@ -14,7 +14,7 @@ import org.openide.modules.ModuleInstall;
 public class Installer extends ModuleInstall{
     @Override
     public void restored(){
-        System.out.println("HELLOOOO FROM PLAYER INSTALLER");
+        System.out.println("Module Player Installed");
     }
      @Override
     public void uninstalled(){

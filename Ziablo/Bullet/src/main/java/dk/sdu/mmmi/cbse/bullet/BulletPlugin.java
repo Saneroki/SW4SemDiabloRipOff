@@ -41,7 +41,6 @@ public class BulletPlugin implements IGamePluginService, ICreateBullet {
     public void start(GameData gameData, World world) {
         TexturePath idle = new TexturePath("sprite/orb.png", BulletPlugin.class, Bullet.class);
         world.addSprite(idle);
-        System.out.println("dk.sdu.mmmi.cbse.bullet.BulletPlugin.start()");
     }
 
     @Override

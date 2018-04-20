@@ -16,8 +16,8 @@ public class TexturePath implements Serializable{
     
       private final UUID ID = UUID.randomUUID();
       
-      private final String resource;
-      private final Class module;
+      private final String resource; //Texture loaded
+      private final Class module;    //Modlue the texture will be used
       private final Class service;
       
       public TexturePath(String resource, Class module, Class service){
