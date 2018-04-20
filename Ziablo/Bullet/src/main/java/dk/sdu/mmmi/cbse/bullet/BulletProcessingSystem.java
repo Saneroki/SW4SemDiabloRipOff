@@ -48,7 +48,8 @@ public class BulletProcessingSystem implements IEntityProcessingService {
                 world.removeEntity(projectile);
             }
 
-            updateShape(projectile);
+            // We dont need a shape as we use Sprite.
+            // updateShape(projectile);
 
         }
 
