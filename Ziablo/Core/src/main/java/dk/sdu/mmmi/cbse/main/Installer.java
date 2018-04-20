@@ -20,7 +20,7 @@ public class Installer extends ModuleInstall {
                 cfg.resizable = false;
 
                 new LwjglApplication(new Game(), cfg);
-                System.out.println("Core Initialized");
+                System.out.println("HELOOOOOOOO FROM CORE INSTALLER");
             }
 
     

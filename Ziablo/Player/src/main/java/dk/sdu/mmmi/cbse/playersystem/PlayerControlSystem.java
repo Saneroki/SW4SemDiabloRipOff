@@ -54,6 +54,7 @@ public class PlayerControlSystem implements IEntityProcessingService {
             
             //Potentially working
             if (gameData.getKeys().isDown(SPACE)) {
+                System.out.print("pew pew   -   ");
                 if (createBullet == null) {
                     instantiateBullet();
                 }

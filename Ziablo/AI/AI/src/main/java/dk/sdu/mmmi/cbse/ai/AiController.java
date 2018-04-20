@@ -46,10 +46,10 @@ public class AiController implements IEntityProcessingService, IGamePluginServic
 //                    walkWithoutPurpose((Enemy) e, data);
 //                }
                     walkWithoutPurpose((Enemy) e, data);
-                    
+                    System.out.println("I feel alone in the wolrd... deep darkness envelop me..");
                 }
                 if (p instanceof Player) {
-                    
+                    System.out.println("HE THERE BOYS! GET HIM! ");
                 }
             }
         }

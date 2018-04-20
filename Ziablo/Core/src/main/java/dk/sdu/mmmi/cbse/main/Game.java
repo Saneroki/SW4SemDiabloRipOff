@@ -123,7 +123,7 @@ public class Game
                         p.getX(), p.getY());
             } else if (e.getClass() == Player.class) {
                 PositionPart p = e.getPart(PositionPart.class);
-                cam.position.set(p.getX(), p.getY(), 0);
+            //    cam.position.set(p.getX(), p.getY(), 0);
                 batch.draw(drawTextureRegion(TextureLoader.player_idle),
                         p.getX(), p.getY());
             } else if (e.getClass() == Bullet.class) {
