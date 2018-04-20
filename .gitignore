@@ -1,6 +1,7 @@
 
 /.idea/
 .idea/
+target/
 SW4SemDiabloRipOff.iml
 Ziablo/Player/target/
 Ziablo/branding/target/

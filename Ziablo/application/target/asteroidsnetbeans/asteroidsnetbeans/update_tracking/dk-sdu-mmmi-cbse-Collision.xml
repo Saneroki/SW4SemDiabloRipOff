@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><module codename="dk.sdu.mmmi.cbse.Collision">
-    <module_version install_time="1524060947415" last="true" origin="installer" specification_version="1.0.1">
-        <file crc="922174143" name="config/Modules/dk-sdu-mmmi-cbse-Collision.xml"/>
-        <file crc="2490258442" name="modules/dk-sdu-mmmi-cbse-Collision.jar"/>
-    </module_version>
-</module>
