@@ -38,15 +38,12 @@ public class Game
     private static OrthographicCamera cam;
     private ShapeRenderer sr;
     private SpriteBatch batch;
-
+    private TextureLoader TL;
+    
     //So we replace the "SPILocator" with this Lookup. This will be our whiteboard register in netbeans modules
     private final Lookup lookup = Lookup.getDefault();
 
     private final GameData gameData = new GameData();
-    private List<IEntityProcessingService> entityProcessors = new ArrayList<>(); //this doesnt seem to get used anywhere. Maybe for own implementations?
-
-    // MAYBE YOUR NOT ALLOWED TO ALSO ADD POST PROCESS LIST, I DONT KNOW ASK THE TEACHER OR TAS
-    private List<IPostEntityProcessingService> postEntityProcessors = new ArrayList<>();
 
     private World world = new World();
 
@@ -62,7 +59,8 @@ public class Game
 
         sr = new ShapeRenderer();
         batch = new SpriteBatch();
-
+        TL = new TextureLoader();
+        
         Gdx.input.setInputProcessor(
                 new GameInputProcessor(gameData)
         );
@@ -89,7 +87,7 @@ public class Game
 
         gameData.getKeys().update();
 
-        TextureLoader.loadRenderingMaterial(world);
+        TL.loadRenderingMaterial(world);
 
         if (world.getSprites().isEmpty()) {
             update();
@@ -129,16 +127,16 @@ public class Game
             Entity e = world.getSortedListOfEntities().get(i);
 
             if (e.getClass() == Enemy.class) {
-                drawTexture(TextureLoader.enemy_idle, e);
+                drawTexture(TL.getEnemy_idle(), e);
 
             } else if (e.getClass() == Player.class) {
-                drawTexture(TextureLoader.player_idle, e);
+                drawTexture(TL.getPlayer_idle(), e);
 
             } else if (e.getClass() == Bullet.class) {
-                drawTexture(TextureLoader.projectile, e);
+                drawTexture(TL.getProjectile(), e);
 
             } else if (e.getClass() == Obstacle.class) {
-                drawTexture(TextureLoader.obstacle, e);
+                drawTexture(TL.getObstacle(), e);
             }
 
         }
@@ -153,6 +151,9 @@ public class Game
                 a),
                 p.getX() - (width / 2),
                 p.getY() - (height / 2));
+        if (e.getClass() == Player.class){
+            cam.position.set(p.getX(), p.getY(), 0);
+        }
     }
 
     private TextureRegion getTextureRegion(Animation component_animation) {
@@ -166,6 +167,8 @@ public class Game
         renderer.setView(cam);
         renderer.render();
 
+        sr.setProjectionMatrix(cam.combined);
+        
         for (Entity entity : world.getEntities()) {
 
             sr.setColor(1, 1, 1, 1);
@@ -200,6 +203,10 @@ public class Game
 
     @Override
     public void dispose() {
+        map.dispose();
+        renderer.dispose();
+        sr.dispose();
+        batch.dispose();
     }
 
     //previously (last week) we used "SPILocater" for java jdk serviceloader. Now we use "Lookup"

@@ -26,8 +26,12 @@ public class PlayerControlSystem implements IEntityProcessingService {
 
     private ICreateBullet createBullet;
     private PositionPart positionPart;
-    private boolean dragging;
-
+    private boolean test = true;
+    private float xFirst;
+    private float yFirst;
+    private float difX;
+    private float difY;
+    
     /**
      * Use SPILocator (or netbeans Lookup) to find all implementations of the
      * ICreateBullet interface. This way we don't have to add a physical Bullet
@@ -111,7 +115,17 @@ public class PlayerControlSystem implements IEntityProcessingService {
     }
     
     private float setPlayerRotation(GameData gameData) {
-        float angle = (float) Math.atan2(gameData.getMousePositionY() - positionPart.getY(), gameData.getMousePositionX() - positionPart.getX());
+        if (test) {
+            xFirst = positionPart.getX();
+            yFirst = positionPart.getY();
+            test = false;
+        }
+        
+        difX = positionPart.getX() - xFirst;
+        difY = positionPart.getY() - yFirst;
+
+        float angle = (float) Math.atan2((gameData.getMousePositionY() + difY) - positionPart.getY(), (gameData.getMousePositionX() + difX) - positionPart.getX());
+
         return angle;
     }
 

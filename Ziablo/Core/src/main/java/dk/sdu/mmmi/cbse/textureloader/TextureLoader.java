@@ -27,23 +27,19 @@ public class TextureLoader {
 
     private World gameworld;
 
-    public static Animation player_idle;
+    private Animation player_idle;
 
-    public static Animation enemy_idle;
+    private Animation enemy_idle;
 
-    public static Animation projectile;
+    private Animation projectile;
 
-    public static Animation obstacle;
+    private Animation obstacle;
 
     private static boolean enemy = false;
 
     private static boolean player = false;
 
-    public TextureLoader(World gameworld) {
-        this.gameworld = gameworld;
-    }
-
-    public static void loadRenderingMaterial(World gameworld) {
+    public void loadRenderingMaterial(World gameworld) {
         if (!gameworld.getSprites().isEmpty()) {
             for (TexturePath sheet : gameworld.getSprites()) {
 
@@ -132,22 +128,20 @@ public class TextureLoader {
         return data;
     }
 
-    public static Animation getPlayer_idle() {
+     public Animation getPlayer_idle() {
         return player_idle;
     }
 
-    public static Animation getEnemy_idle() {
+    public Animation getEnemy_idle() {
         return enemy_idle;
     }
 
-    public static Animation getProjectile() {
+    public Animation getProjectile() {
         return projectile;
     }
 
-    public static Animation getObstacle() {
+    public Animation getObstacle() {
         return obstacle;
     }
-    
-    
 
 }
