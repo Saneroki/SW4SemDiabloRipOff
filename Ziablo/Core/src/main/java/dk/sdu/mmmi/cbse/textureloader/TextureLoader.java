@@ -5,17 +5,13 @@
  */
 package dk.sdu.mmmi.cbse.textureloader;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import dk.sdu.mmmi.cbse.common.texture.TexturePath;
-import dk.sdu.mmmi.cbse.common.texture.TextureType;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.commonbullet.Bullet;
 import dk.sdu.mmmi.cbse.commonenemy.Enemy;
