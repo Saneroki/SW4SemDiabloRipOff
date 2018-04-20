@@ -50,7 +50,7 @@ public class TextureLoader {
                 }
 
                 if (sheet.getService().equals(Player.class)) {
-                    player_idle = ComponentAnimator(loadTexture(sheet.getModule(), sheet.getResource()), 1, 4, 3f);
+                    player_idle = ComponentAnimator(loadTexture(sheet.getModule(), sheet.getResource()), 1, 3, 3f);
                     System.out.println("Texture animation: " + player_idle + " " + sheet.getModule());
                     gameworld.removeSprite(sheet);
                 }
