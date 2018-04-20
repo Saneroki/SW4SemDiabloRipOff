@@ -46,12 +46,27 @@ public class PlayerControlSystem implements IEntityProcessingService {
             positionPart = player.getPart(PositionPart.class);
             MovingPart movement = player.getPart(MovingPart.class);
 
-            movement.setLeft(gameData.getKeys().isDown(LEFT));
-            movement.setRight(gameData.getKeys().isDown(RIGHT));
-            movement.setUp(gameData.getKeys().isDown(UP));
-            movement.setDown(gameData.getKeys().isDown(DOWN));
+            
             positionPart.setRadians(setPlayerRotation(gameData));
             
+            
+            if (gameData.getKeys().isDown(LEFT)){
+                movement.setDx(-100f);
+            }
+            
+            if (gameData.getKeys().isDown(RIGHT)){
+                movement.setDx(100f);
+            }
+            
+            if (gameData.getKeys().isDown(UP)){
+                movement.setDy(100f);
+            }            
+            if (gameData.getKeys().isDown(DOWN)){
+                movement.setDy(-100f);
+            }
+            
+            
+           
             //Potentially working
             if (gameData.getKeys().isDown(SPACE)) {
                 if (createBullet == null) {
