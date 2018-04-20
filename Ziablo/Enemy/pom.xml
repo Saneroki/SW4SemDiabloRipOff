@@ -55,6 +55,12 @@
             <artifactId>CommonEnemy</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>dk.sdu.mmmi.cbse</groupId>
+            <artifactId>CommonPlayer</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

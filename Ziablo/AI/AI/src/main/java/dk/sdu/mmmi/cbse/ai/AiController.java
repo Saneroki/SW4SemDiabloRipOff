@@ -15,6 +15,7 @@ import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 
 import dk.sdu.mmmi.cbse.commonenemy.Enemy;
 import dk.sdu.mmmi.cbse.commonplayer.Player;
+
 import java.util.Random;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
@@ -37,19 +38,19 @@ public class AiController implements IEntityProcessingService, IGamePluginServic
 
     @Override
     public void process(GameData data, World world) {
-        for (Entity e : world.getEntities()) {
-            for (Entity p : world.getEntities()) {
+        for (Entity e : world.getEntities(Enemy.class)) {
+            for (Entity p : world.getEntities(Player.class)) {
                 if (e instanceof Enemy) {
 //                if (((Enemy) e).getHasTarget()) {
 //                    chargeTarget((Enemy) e, world, data);
 //                } else if (!((Enemy) e).isAttacking()) {
 //                    walkWithoutPurpose((Enemy) e, data);
 //                }
-                    walkWithoutPurpose((Enemy) e, data);
-                    System.out.println("I feel alone in the wolrd... deep darkness envelop me..");
-                }
-                if (p instanceof Player) {
-                    System.out.println("HE THERE BOYS! GET HIM! ");
+                    if (e.getFind()) {
+                        chargeTarget(e, p, world, data);
+                    } else{
+                        walkWithoutPurpose((Enemy) e, data);
+                    }
                 }
             }
         }
