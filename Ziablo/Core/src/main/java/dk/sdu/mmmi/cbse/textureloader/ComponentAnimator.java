@@ -31,4 +31,13 @@ public class ComponentAnimator {
 
         return comp_animation;
     }
+    
+    public static int getTextureWidth(Texture spritesheet){
+        return spritesheet.getWidth();
+    }
+    
+    public static int getTextureHeight(Texture spritesheet){
+        return spritesheet.getHeight();
+    }
+    
 }

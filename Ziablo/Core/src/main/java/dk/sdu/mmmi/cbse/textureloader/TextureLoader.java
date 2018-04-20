@@ -60,7 +60,7 @@ public class TextureLoader {
                 }
                 
                 if (sheet.getService().equals(Bullet.class)) {
-                    projectile = ComponentAnimator(loadTexture(sheet.getModule(), sheet.getResource()), 1, 4, 3f);
+                    projectile = ComponentAnimator(loadTexture(sheet.getModule(), sheet.getResource()), 1, 1, 1f);
                     System.out.println("Texture animation: " + projectile + " " + sheet.getModule());
                     gameworld.removeSprite(sheet);
                 }
@@ -75,6 +75,8 @@ public class TextureLoader {
         }
 
     }
+    
+
 
     private static Texture loadTexture(Class cls, String path) {
         byte[] data;
@@ -129,5 +131,23 @@ public class TextureLoader {
 
         return data;
     }
+
+    public static Animation getPlayer_idle() {
+        return player_idle;
+    }
+
+    public static Animation getEnemy_idle() {
+        return enemy_idle;
+    }
+
+    public static Animation getProjectile() {
+        return projectile;
+    }
+
+    public static Animation getObstacle() {
+        return obstacle;
+    }
+    
+    
 
 }

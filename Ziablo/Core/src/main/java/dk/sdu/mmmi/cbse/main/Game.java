@@ -31,10 +31,10 @@ import org.openide.util.Lookup;
 
 public class Game
         implements ApplicationListener {
-    
+
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
-    
+
     private static OrthographicCamera cam;
     private ShapeRenderer sr;
     private SpriteBatch batch;
@@ -71,7 +71,7 @@ public class Game
         for (IGamePluginService iGamePlugin : getPluginServices()) {
             iGamePlugin.start(gameData, world);
         }
-        
+
         map = new TmxMapLoader().load("maps/woodMap.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
     }
@@ -84,7 +84,7 @@ public class Game
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         gameData.setDelta(Gdx.graphics.getDeltaTime());
-        
+
         draw();
 
         gameData.getKeys().update();
@@ -93,7 +93,8 @@ public class Game
 
         if (world.getSprites().isEmpty()) {
             update();
-            drawWorldContext();
+            drawEntities();
+            drawCamera();
         }
     }
 
@@ -109,49 +110,62 @@ public class Game
         }
     }
 
-    private void drawWorldContext() {
+    private void drawCamera() {
         cam.update();
         batch.setProjectionMatrix(cam.combined);
+        for (int i = 0; i <= world.getSortedListOfEntities().size() - 1; i++) {
+            Entity e = world.getSortedListOfEntities().get(i);
+            if (e.getClass() == Player.class) {
+                PositionPart p = e.getPart(PositionPart.class);
+                cam.position.set(p.getX(), p.getY(), 0);
+            }
+        }
+    }
+
+    private void drawEntities() {
 
         batch.begin();
         for (int i = 0; i <= world.getSortedListOfEntities().size() - 1; i++) {
             Entity e = world.getSortedListOfEntities().get(i);
 
             if (e.getClass() == Enemy.class) {
-                PositionPart p = e.getPart(PositionPart.class);
-                batch.draw(drawTextureRegion(TextureLoader.enemy_idle),
-                        p.getX(), p.getY());
+                drawTexture(TextureLoader.enemy_idle, e);
+
             } else if (e.getClass() == Player.class) {
-                PositionPart p = e.getPart(PositionPart.class);
-                cam.position.set(p.getX(), p.getY(), 0);
-                batch.draw(drawTextureRegion(TextureLoader.player_idle),
-                        p.getX(), p.getY());
+                drawTexture(TextureLoader.player_idle, e);
+
             } else if (e.getClass() == Bullet.class) {
-                PositionPart p = e.getPart(PositionPart.class);
-                batch.draw(drawTextureRegion(TextureLoader.projectile),
-                        p.getX() - e.getRadius(), p.getY() - e.getRadius());
+                drawTexture(TextureLoader.projectile, e);
+
             } else if (e.getClass() == Obstacle.class) {
-                PositionPart p = e.getPart(PositionPart.class);
-                batch.draw(drawTextureRegion(TextureLoader.obstacle),
-                        p.getX() - e.getRadius(), p.getY() - e.getRadius());
+                drawTexture(TextureLoader.obstacle, e);
             }
 
         }
         batch.end();
-
     }
 
-    private TextureRegion drawTextureRegion(Animation component_animation) {
+    private void drawTexture(Animation a, Entity e) {
+        int width = getTextureRegion(a).getRegionWidth();
+        int height = getTextureRegion(a).getRegionHeight();
+        PositionPart p = e.getPart(PositionPart.class);
+        batch.draw(getTextureRegion(
+                a),
+                p.getX() - (width / 2),
+                p.getY() - (height / 2));
+    }
+
+    private TextureRegion getTextureRegion(Animation component_animation) {
         TextureRegion texture = component_animation.getKeyFrame(gameData.getDelta(), true);
 
         return texture;
     }
 
     private void draw() {
-        
+
         renderer.setView(cam);
         renderer.render();
-        
+
         for (Entity entity : world.getEntities()) {
 
             sr.setColor(1, 1, 1, 1);
