@@ -62,7 +62,7 @@ public class TextureLoader {
                 }
                 
                 if (sheet.getService().equals(Obstacle.class)) {
-                    obstacle = ComponentAnimator(loadTexture(sheet.getModule(), sheet.getResource()), 1, 4, 3f);
+                    obstacle = ComponentAnimator(loadTexture(sheet.getModule(), sheet.getResource()), 1, 1, 1f);
                     System.out.println("Texture animation: " + obstacle + " " + sheet.getModule());
                     gameworld.removeSprite(sheet);
                 }
