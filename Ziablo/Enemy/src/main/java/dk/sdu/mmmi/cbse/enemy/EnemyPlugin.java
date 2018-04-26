@@ -33,7 +33,7 @@ public class EnemyPlugin implements IGamePluginService {
 
     ArrayList amountOfEnemies = new ArrayList();
 
-    private List<Entity> createEnemyShip(GameData gameData) {
+    private List<Entity> getEnemies(GameData gameData) {
 
         float deacceleration = 900;
         float acceleration = 50;
@@ -43,13 +43,12 @@ public class EnemyPlugin implements IGamePluginService {
         float y;
         float radians = 3.1415f / 2;
 
-
         for (int i = 0; i < 50; i++) {
             Entity entityEnemy = new Enemy();
             entityEnemy.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
 
-            x = gameData.getDisplayWidth() / random.nextInt(50) + 1;
-            y = gameData.getDisplayHeight() / random.nextInt(50) + 1;
+            x = gameData.getDisplayWidth() / (random.nextInt(100) + 1);
+            y = gameData.getDisplayHeight() / (random.nextInt(100) + 1);
 
             entityEnemy.add(new PositionPart(x, y, radians));
             entityEnemy.add(new LifePart(3, Float.MAX_VALUE));
@@ -63,14 +62,14 @@ public class EnemyPlugin implements IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-
+        System.out.println("dk.sdu.mmmi.cbse.enemy.EnemyPlugin.start()");
         // Add entities to the world
-        for (Object enemyElement : createEnemyShip(gameData)) {
+        for (Object enemyElement : getEnemies(gameData)) {
             enemy = (Entity) enemyElement;
             world.addSprite(idle);
             world.addEntity(enemy);
         }
-        System.out.println("dk.sdu.mmmi.cbse.enemy.EnemyPlugin.start()");
+
     }
 
     @Override
