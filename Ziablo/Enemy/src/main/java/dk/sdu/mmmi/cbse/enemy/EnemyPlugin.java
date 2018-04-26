@@ -44,12 +44,12 @@ public class EnemyPlugin implements IGamePluginService {
         float radians = 3.1415f / 2;
 
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 50; i++) {
             Entity entityEnemy = new Enemy();
             entityEnemy.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
 
-            x = gameData.getDisplayWidth() / random.nextInt(50);
-            y = gameData.getDisplayHeight() / random.nextInt(50);
+            x = gameData.getDisplayWidth() / random.nextInt(50) + 1;
+            y = gameData.getDisplayHeight() / random.nextInt(50) + 1;
 
             entityEnemy.add(new PositionPart(x, y, radians));
             entityEnemy.add(new LifePart(3, Float.MAX_VALUE));
