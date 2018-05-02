@@ -17,36 +17,11 @@ public class PositionPart implements EntityPart {
     private float x;
     private float y;
     private float radians;
-    private float width;
-    private float height;
 
-    public float getWidth() {
-        return width;
-    }
-
-    public void setWidth(float width) {
-        this.width = width;
-    }
-
-    public float getHeight() {
-        return height;
-    }
-
-    public void setHeight(float height) {
-        this.height = height;
-    }
-    
     public PositionPart(float x, float y, float radians) {
         this.x = x;
         this.y = y;
         this.radians = radians;
-    }
-    
-    public PositionPart(float x, float y, float width, float height){
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
     }
 
     public float getX() {

@@ -8,12 +8,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
@@ -21,14 +18,15 @@ import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
-import dk.sdu.mmmi.cbse.common.services.ICreateWall;
 import dk.sdu.mmmi.cbse.commonbullet.Bullet;
 import dk.sdu.mmmi.cbse.commonenemy.Enemy;
 import dk.sdu.mmmi.cbse.commonobstacle.Obstacle;
 import dk.sdu.mmmi.cbse.commonplayer.Player;
 import dk.sdu.mmmi.cbse.managers.GameInputProcessor;
 import dk.sdu.mmmi.cbse.textureloader.TextureLoader;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import org.openide.util.Lookup;
 
 public class Game
@@ -41,7 +39,7 @@ public class Game
     private ShapeRenderer sr;
     private SpriteBatch batch;
     private TextureLoader TL;
-
+    
     //So we replace the "SPILocator" with this Lookup. This will be our whiteboard register in netbeans modules
     private final Lookup lookup = Lookup.getDefault();
 
@@ -62,7 +60,7 @@ public class Game
         sr = new ShapeRenderer();
         batch = new SpriteBatch();
         TL = new TextureLoader();
-
+        
         Gdx.input.setInputProcessor(
                 new GameInputProcessor(gameData)
         );
@@ -74,22 +72,6 @@ public class Game
 
         map = new TmxMapLoader().load("maps/woodMap.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
-
-        for (ICreateWall iCreateWall : getWallServices()) {
-            for (MapObject object : map.getLayers().get("Object Layer 1").getObjects()) {
-                if (object instanceof RectangleMapObject) {
-                    RectangleMapObject rectObject = (RectangleMapObject) object;
-                    Rectangle rect = rectObject.getRectangle();
-                    iCreateWall.createWalls(rect.x, rect.y - 99200, rect.width, rect.height);
-//                    System.out.println(rect.x + " " + (rect.y - 99200) );
-//                    sr.setColor(1, 1, 1, 1);
-//                    sr.begin(ShapeRenderer.ShapeType.Line);
-//                    sr.line(rect.x, rect.y-99200, 0, 0);
-//                    sr.rect(rect.x, rect.y - 99200, rect.width, rect.height);
-//                    sr.end();
-                }
-            }
-        }
     }
 
     @Override
@@ -169,6 +151,9 @@ public class Game
                 a),
                 p.getX() - (width / 2),
                 p.getY() - (height / 2));
+        if (e.getClass() == Player.class){
+            cam.position.set(p.getX(), p.getY(), 0);
+        }
     }
 
     private TextureRegion getTextureRegion(Animation component_animation) {
@@ -183,7 +168,7 @@ public class Game
         renderer.render();
 
         sr.setProjectionMatrix(cam.combined);
-
+        
         for (Entity entity : world.getEntities()) {
 
             sr.setColor(1, 1, 1, 1);
@@ -227,10 +212,6 @@ public class Game
     //previously (last week) we used "SPILocater" for java jdk serviceloader. Now we use "Lookup"
     private Collection<? extends IGamePluginService> getPluginServices() {
         return lookup.lookupAll(IGamePluginService.class);
-    }
-
-    private Collection<? extends ICreateWall> getWallServices() {
-        return lookup.lookupAll(ICreateWall.class);
     }
 
     //previously (last week) we used "SPILocater" for java jdk serviceloader. Now we use "Lookup"

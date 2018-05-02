@@ -14,29 +14,35 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.texture.TexturePath;
 import dk.sdu.mmmi.cbse.commonenemy.Enemy;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author Sadik
  */
-
 @ServiceProvider(service = IGamePluginService.class)
 public class EnemyPlugin implements IGamePluginService {
 
-    private Entity enemy;
+    Random random = new Random();
 
-    private Entity createEnemyShip(GameData gameData) {
+    private Entity enemy;
+    TexturePath idle = new TexturePath("sprite/Axe_Bandit.png", EnemyPlugin.class, Enemy.class);
+
+    ArrayList amountOfEnemies = new ArrayList();
+
+    private List<Entity> getEnemies(GameData gameData) {
 
         float deacceleration = 900;
         float acceleration = 50;
         float maxSpeed = 10;
         float rotationSpeed = 2;
-        float x = gameData.getDisplayWidth() / 3;
-        float y = gameData.getDisplayHeight() / 3;
+        float x;
+        float y;
         float radians = 3.1415f / 2;
 
-<<<<<<< HEAD
         for (int i = 0; i < 50; i++) {
             Entity entityEnemy = new Enemy();
             entityEnemy.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
@@ -47,27 +53,23 @@ public class EnemyPlugin implements IGamePluginService {
             entityEnemy.add(new PositionPart(x, y, radians));
             entityEnemy.add(new LifePart(3, Float.MAX_VALUE));
             entityEnemy.setRadius(20);
-=======
-        Entity enemyShip = new Enemy();
-        enemyShip.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
-        enemyShip.add(new PositionPart(x, y, radians));
-        enemyShip.add(new LifePart(3, Float.MAX_VALUE));
-        enemyShip.setRadius(8);
-        
->>>>>>> origin/master
 
-        return enemyShip;
+            amountOfEnemies.add(entityEnemy);
+        }
+
+        return amountOfEnemies;
     }
 
     @Override
     public void start(GameData gameData, World world) {
-        TexturePath idle = new TexturePath("sprite/Axe_Bandit.png", EnemyPlugin.class ,Enemy.class);
-        world.addSprite(idle);
-        
-        // Add entities to the world
-        enemy = createEnemyShip(gameData);
-        world.addEntity(enemy);
         System.out.println("dk.sdu.mmmi.cbse.enemy.EnemyPlugin.start()");
+        // Add entities to the world
+        for (Object enemyElement : getEnemies(gameData)) {
+            enemy = (Entity) enemyElement;
+            world.addSprite(idle);
+            world.addEntity(enemy);
+        }
+
     }
 
     @Override
@@ -75,5 +77,6 @@ public class EnemyPlugin implements IGamePluginService {
         // Remove entities
         world.removeEntity(enemy);
         System.out.println("dk.sdu.mmmi.cbse.enemy.EnemyPlugin.stop()");
+        world.removeSprite(idle);
     }
 }
