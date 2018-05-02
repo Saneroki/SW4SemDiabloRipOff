@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dk.sdu.mmmi.cbse.asteroid;
+package dk.sdu.mmmi.cbse.common.data;
+
 import dk.sdu.mmmi.cbse.common.data.Entity;
 
 /**
  *
- * @author Sadik
+ * @author Ander
  */
-public class Asteroid extends Entity{
+public class Wall extends Entity{
     
 }
