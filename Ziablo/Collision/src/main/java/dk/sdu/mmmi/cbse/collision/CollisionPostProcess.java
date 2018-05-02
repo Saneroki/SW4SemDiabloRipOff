@@ -5,15 +5,19 @@
  */
 package dk.sdu.mmmi.cbse.collision;
 
+import dk.sdu.mmmi.cbse.common.data.Asteroid;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
+import dk.sdu.mmmi.cbse.common.data.Wall;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.data.entityparts.LifePart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
-import java.util.ArrayList;
-import java.util.List;
+import dk.sdu.mmmi.cbse.commonbullet.Bullet;
+import dk.sdu.mmmi.cbse.commonenemy.Enemy;
+import dk.sdu.mmmi.cbse.commonobstacle.Obstacle;
+import dk.sdu.mmmi.cbse.commonplayer.Player;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -24,93 +28,172 @@ import org.openide.util.lookup.ServiceProvider;
 
 public class CollisionPostProcess implements IPostEntityProcessingService {
 
-    
-    private boolean check;
-    
     @Override
     public void process(GameData gameData, World world) {
-        for (Entity e : world.getEntities()) {
-            collision(e, world);
-            collisionOverlap(e, gameData, world);
+        for (Entity entity1 : world.getEntities()) {
+            for (Entity entity2 : world.getEntities()) {
+                collision(entity1, entity2, world);
+                testLife(entity1, entity2, world);
+            }
         }
-
     }
 
-    private void collision(Entity entity1, World world) {
+    private void collision(Entity entity1, Entity entity2, World world) {
 
-        PositionPart positionPart = entity1.getPart(PositionPart.class);
+        float dx;
+        float dy;
+        float distance;
 
-        for (Entity entity2 : world.getEntities()) {
+        PositionPart positionPart1 = entity1.getPart(PositionPart.class);
+        PositionPart positionPart2 = entity2.getPart(PositionPart.class);
 
-            if (entity1.equals(entity2)) {
-                break;
-            }
-            PositionPart positionPart2 = entity2.getPart(PositionPart.class);
-            float dx = positionPart.getX() - positionPart2.getX();
-            float dy = positionPart.getY() - positionPart2.getY();
-            float distance = (float) Math.sqrt(dx * dx + dy * dy);
-            if (distance < entity1.getRadius() + entity2.getRadius()) {
-                LifePart firstEntity = entity1.getPart(LifePart.class);
-                firstEntity.setIsHit(true);
-                firstEntity.setLife(firstEntity.getLife() - 1);
+        if (entity1.equals(entity2)) {
+            return;
+        }
 
-                LifePart secondEntity = entity2.getPart(LifePart.class);
-                secondEntity.setIsHit(true);
-                secondEntity.setLife(secondEntity.getLife() - 1);
+        if (entity1 instanceof Wall && entity2 instanceof Wall) {
+            return;
+        }
 
-                if (firstEntity.getLife() == 0) {
-                    world.removeEntity(entity1);
-                }
-                if (secondEntity.getLife() == 0) {
+        if (entity1 instanceof Wall) {
+            if (RectangleAndCircleCollision(positionPart1.getX(), positionPart1.getY(),
+                    positionPart1.getHeight(), positionPart1.getWidth(), positionPart2.getX(), positionPart2.getY(), entity2.getRadius())) {
+
+                if (entity2 instanceof Bullet) {
                     world.removeEntity(entity2);
+                    return;
                 }
-                System.out.println(entity1.getClass().toString() + " COLLIDED WITH: " + entity2.getClass().toString());
+                collisionWall(entity2);
+                return;
+            }
+        }
+
+        if (entity2 instanceof Wall) {
+            if (RectangleAndCircleCollision(positionPart2.getX(), positionPart2.getY(),
+                    positionPart2.getHeight(), positionPart2.getWidth(), positionPart1.getX(), positionPart1.getY(), entity1.getRadius())) {
+
+                if (entity1 instanceof Bullet) {
+                    world.removeEntity(entity1);
+                    return;
+                }
+                collisionWall(entity1);
+                return;
+            }
+        }
+
+        dx = positionPart1.getX() - positionPart2.getX();
+        dy = positionPart1.getY() - positionPart2.getY();
+        distance = (float) Math.sqrt(dx * dx + dy * dy);
+
+        if (distance <= entity1.getRadius() + entity2.getRadius()) {
+
+            LifePart entityOneLifePart = entity1.getPart(LifePart.class);
+            LifePart entityTwoLifePart = entity2.getPart(LifePart.class);
+
+            if (entity1 instanceof Player) {
+                if (entity2 instanceof Enemy) {
+                    entityOneLifePart.setIsHit(true);
+                    entityOneLifePart.setLife(entityOneLifePart.getLife() - 1);
+                    System.out.println(entity1.getClass().toString() + " COLLIDED WITH: " + entity2.getClass().toString());
+                    return;
+                }
+            }
+            if (entity2 instanceof Player) {
+                if (entity1 instanceof Enemy) {
+                    entityTwoLifePart.setIsHit(true);
+                    entityTwoLifePart.setLife(entityTwoLifePart.getLife() - 1);
+                    System.out.println(entity1.getClass().toString() + " COLLIDED WITH: " + entity2.getClass().toString());
+                    return;
+                }
+            }
+            if (entity1 instanceof Bullet) {
+                if (entity2 instanceof Enemy) {
+                    entityTwoLifePart.setIsHit(true);
+                    entityTwoLifePart.setLife(entityTwoLifePart.getLife() - 1);
+                    world.removeEntity(entity1);
+                    System.out.println(entity1.getClass().toString() + " COLLIDED WITH: " + entity2.getClass().toString());
+                    return;
+                }
+            }
+            if (entity2 instanceof Bullet) {
+                if (entity1 instanceof Enemy) {
+                    entityOneLifePart.setIsHit(true);
+                    entityOneLifePart.setLife(entityOneLifePart.getLife() - 1);
+                    world.removeEntity(entity2);
+                    System.out.println(entity1.getClass().toString() + " COLLIDED WITH: " + entity2.getClass().toString());
+                    return;
+                }
+            }
+            if (entity1 instanceof Obstacle) {
+                if(entity2 instanceof Player) {
+                    collisionOverlap(entity1, entity2);
+                    System.out.println(entity1.getClass().toString() + " COLLIDED WITH: " + entity2.getClass().toString());
+                    return;
+                }
+            }
+            if (entity2 instanceof Obstacle) {
+                if(entity1 instanceof Player) {
+                    collisionOverlap(entity2, entity1);
+                    System.out.println(entity1.getClass().toString() + " COLLIDED WITH: " + entity2.getClass().toString());
+                    return;
+                }
             }
         }
     }
 
-    private void collisionOverlap(Entity entity_0, GameData gameData, World world) {
+    private void testLife(Entity entity1, Entity entity2, World world) {
 
-        for (Entity entity_1 : world.getEntities()) {
-            
-            if(entity_0.equals(entity_1)){
-                break;
-            }
-            
-            
-            PositionPart Pentity0 = entity_0.getPart(PositionPart.class);
-            PositionPart Pentity1 = entity_1.getPart(PositionPart.class);
+        LifePart entityOneLifePart = entity1.getPart(LifePart.class);
+        LifePart entityTwoLifePart = entity2.getPart(LifePart.class);
+        if (entityOneLifePart.getLife() == 0) {
+            world.removeEntity(entity1);
+        }
+        if (entityTwoLifePart.getLife() == 0) {
+            world.removeEntity(entity2);
+        }
+    }
 
-            float ColX0 = Pentity0.getX() + gameData.getDisplayWidth() / 2;
-            float ColY0 = Pentity0.getY() + gameData.getDisplayHeight() / 2;
+    private boolean RectangleAndCircleCollision(float rectX, float rectY, float rectHeight, float rectWidth, float circX, float circY, float circRadius) {
 
-            float ColX1 = Pentity1.getX() + gameData.getDisplayWidth() / 2;
-            float ColY1 = Pentity1.getY() + gameData.getDisplayHeight() / 2;
+        float deltaX = circX - Math.max(rectX, Math.min(circX, rectX + rectWidth));
+        float deltaY = circY - Math.max(rectY, Math.min(circY, rectY + rectHeight));
 
-            float dx = (ColX0 + entity_0.getRadius() / 2) - (ColX1 + entity_1.getRadius() / 2);
-            float dy = (ColY0 + entity_0.getRadius() / 2) - (ColY1 + entity_1.getRadius() / 2);
+        return (deltaX * deltaX + deltaY * deltaY) < (circRadius * circRadius);
+    }
 
-            float entity_0Radius = entity_0.getRadius();
-            float entity_1Radius = entity_1.getRadius();
+    private void collisionWall(Entity entityNotWall) {
 
-            boolean check = Math.sqrt((dx * dx) + (dy * dy)) <= (entity_1Radius + entity_0Radius);
+        PositionPart posAnything = entityNotWall.getPart(PositionPart.class);
+        MovingPart movingPartAnything = entityNotWall.getPart(MovingPart.class);
+
+        if (entityNotWall instanceof Asteroid) {
+            posAnything.setX(posAnything.getX() - (movingPartAnything.getDx() * (float) 0.5));
+            posAnything.setY(posAnything.getY() - (movingPartAnything.getDy() * (float) 0.5));
+            return;
+        }
+
+        posAnything.setX(posAnything.getX() - (movingPartAnything.getDx() * (float) 0.01));
+        posAnything.setY(posAnything.getY() - (movingPartAnything.getDy() * (float) 0.01));
+    }
+
+    private void collisionOverlap(Entity entityIsPushing, Entity entityGetPushed) {
+
+        if (entityIsPushing.equals(entityGetPushed)) {
+
+        } else {
+
+            PositionPart pentity1 = entityIsPushing.getPart(PositionPart.class);
+            PositionPart pentity2 = entityGetPushed.getPart(PositionPart.class);
+
+            float dx = (pentity1.getX() + entityIsPushing.getRadius() / 2) - (pentity2.getX() + entityGetPushed.getRadius() / 2);
+            float dy = (pentity1.getY() + entityIsPushing.getRadius() / 2) - (pentity2.getY() + entityGetPushed.getRadius() / 2);
+
+            boolean check = Math.sqrt((dx * dx) + (dy * dy)) < (entityIsPushing.getRadius() + entityGetPushed.getRadius());
 
             if (check) {
-                Pentity1.setX((Pentity1.getX() - dx / (entity_1.getRadius() - 1)));
-                Pentity1.setY((Pentity1.getY() - dy / (entity_1.getRadius() - 1)));
+                pentity2.setX((pentity2.getX() - dx / (entityGetPushed.getRadius() - 1)));
+                pentity2.setY((pentity2.getY() - dy / (entityGetPushed.getRadius() - 1)));
             }
         }
-        
     }
-
-//    private boolean hitboundOverlap(EntityEnemy entity_0, EntityPlayer entity_1) {
-//        float entity_0_hitbox = entity_0.getHitbox();
-//        float entity_1_hitbox = entity_1.getHitbox();
-//        float dx = (entity_0.getHotboxX() + entity_0_hitbox / 2) - (entity_1.getHotboxX() + entity_1_hitbox / 2);
-//        float dy = (entity_0.getHitboxY() + entity_0_hitbox / 2) - (entity_1.getHitboxY() + entity_1_hitbox / 2);
-//
-//        boolean check = Math.sqrt((dx * dx) + (dy * dy)) <= (entity_1_hitbox + entity_0_hitbox);
-//
-//        return check;
-//    }
 }

@@ -6,7 +6,7 @@
         <artifactId>Ziablo-parent</artifactId>
         <version>1.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>Collision</artifactId>
+    <artifactId>Wall</artifactId>
     <packaging>nbm</packaging>
     <build>
         <plugins>
@@ -29,6 +29,11 @@
     </build>
     <dependencies>
         <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-netbeans-api-annotations-common</artifactId>
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>Common</artifactId>
             <version>${project.version}</version>
@@ -37,36 +42,6 @@
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-openide-modules</artifactId>
             <version>RELEASE82</version>
-        </dependency>
-        <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-openide-util-lookup</artifactId>
-            <version>RELEASE82</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>dk.sdu.mmmi.cbse</groupId>
-            <artifactId>CommonPlayer</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>dk.sdu.mmmi.cbse</groupId>
-            <artifactId>CommonEnemy</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>dk.sdu.mmmi.cbse</groupId>
-            <artifactId>CommonBullet</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>dk.sdu.mmmi.cbse</groupId>
-            <artifactId>CommonObstacle</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
-            <type>jar</type>
         </dependency>
     </dependencies>
     <properties>
