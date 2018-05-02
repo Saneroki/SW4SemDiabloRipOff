@@ -52,7 +52,7 @@ public class EnemyPlugin implements IGamePluginService {
 
             entityEnemy.add(new PositionPart(x, y, radians));
             entityEnemy.add(new LifePart(3, Float.MAX_VALUE));
-            entityEnemy.setRadius(8);
+            entityEnemy.setRadius(20);
 
             amountOfEnemies.add(entityEnemy);
         }

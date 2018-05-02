@@ -44,7 +44,7 @@ public class TextureLoader {
             for (TexturePath sheet : gameworld.getSprites()) {
 
                 if (sheet.getService().equals(Enemy.class)) {
-                    enemy_idle = ComponentAnimator(loadTexture(sheet.getModule(), sheet.getResource()), 1, 4, 3f);
+                    enemy_idle = ComponentAnimator(loadTexture(sheet.getModule(), sheet.getResource()), 4, 4, 3f);
                     System.out.println("Texture animation: " + enemy_idle + " " + sheet.getModule());
                     gameworld.removeSprite(sheet);
                 }

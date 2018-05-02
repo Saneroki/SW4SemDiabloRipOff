@@ -45,7 +45,7 @@ public class ObstaclePlugin implements IGamePluginService, ICreateObstacle {
         obstacle.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
         obstacle.add(new PositionPart(x, y, radians));
         obstacle.add(new LifePart(life, lifeExpiration));
-        obstacle.setRadius(8);
+        obstacle.setRadius(30);
         
         this.obstacle = obstacle;
         
