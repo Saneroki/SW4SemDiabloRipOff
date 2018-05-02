@@ -69,16 +69,16 @@ public class CollisionPostProcess implements IPostEntityProcessingService {
         }
 
         if (entity2 instanceof Wall) {
-            if (RectangleAndCircleCollision(positionPart2.getX(), positionPart2.getY(),
-                    positionPart2.getHeight(), positionPart2.getWidth(), positionPart1.getX(), positionPart1.getY(), entity1.getRadius())) {
-
-                if (entity1 instanceof Bullet) {
-                    world.removeEntity(entity1);
-                    return;
-                }
-                collisionWall(entity1);
+//            if (RectangleAndCircleCollision(positionPart2.getX(), positionPart2.getY(),
+//                    positionPart2.getHeight(), positionPart2.getWidth(), positionPart1.getX(), positionPart1.getY(), entity1.getRadius())) {
+//
+//                if (entity1 instanceof Bullet) {
+//                    world.removeEntity(entity1);
+//                    return;
+//                }
+//                collisionWall(entity1);
                 return;
-            }
+//            }
         }
 
         dx = positionPart1.getX() - positionPart2.getX();
@@ -172,8 +172,8 @@ public class CollisionPostProcess implements IPostEntityProcessingService {
             return;
         }
 
-        posAnything.setX(posAnything.getX() - (movingPartAnything.getDx() * (float) 0.01));
-        posAnything.setY(posAnything.getY() - (movingPartAnything.getDy() * (float) 0.01));
+        posAnything.setX(posAnything.getX() - (movingPartAnything.getDx() * (float) 0.02));
+        posAnything.setY(posAnything.getY() - (movingPartAnything.getDy() * (float) 0.02));
     }
 
     private void collisionOverlap(Entity entityIsPushing, Entity entityGetPushed) {

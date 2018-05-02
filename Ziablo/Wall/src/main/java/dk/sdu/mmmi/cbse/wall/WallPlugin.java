@@ -23,42 +23,42 @@ import org.openide.util.lookup.ServiceProviders;
  *
  * @author Ander
  */
-
 @ServiceProviders(value = {
     @ServiceProvider(service = ICreateWall.class)
     ,
     @ServiceProvider(service = IGamePluginService.class)}
 )
 
-public class WallPlugin implements IGamePluginService, ICreateWall{
+public class WallPlugin implements IGamePluginService, ICreateWall {
 
     private Entity wall;
     private ArrayList amountOfWalls = new ArrayList();
-    
+
     @Override
     public void start(GameData gameData, World world) {
         int i = 0;
-        for(Object wallElement : getWalls(gameData)){
+        for (Object wallElement : getWalls(gameData)) {
             wall = (Entity) wallElement;
             world.addEntity(wall);
             i++;
             System.out.println("hej fra start i væg " + i);
-            
+
         }
     }
-    
+
     @Override
     public void stop(GameData gameData, World world) {
         world.removeEntity(wall);
     }
-    
-    private List<Entity> getWalls(GameData gameData){
+    private int wallamount = 27;
+
+    private List<Entity> getWalls(GameData gameData) {
         float x = 0;
         float y = 0;
         float height = 0;
         float width = 0;
-        
-        for(int i = 0; i < 27; i++){
+
+        for (int i = 0; i < wallamount; i++) {
             Entity wall = new Wall();
             wall.add(new PositionPart(x, y, width, height));
             wall.add(new LifePart(Integer.MAX_VALUE, Float.MAX_VALUE));
@@ -68,27 +68,26 @@ public class WallPlugin implements IGamePluginService, ICreateWall{
         return amountOfWalls;
     }
     private int iWalls = 0;
+
     @Override
     public void createWalls(float x, float y, float width, float height) {
-        
+
         PositionPart posPart;
-        
-        
-        
-            Entity wall = (Wall) amountOfWalls.get(iWalls);
-            
-            posPart = wall.getPart(PositionPart.class);
-            
-            posPart.setX(x);
-            posPart.setY(y);
-            posPart.setWidth(width);
-            posPart.setHeight(height);
-            
+
+        Entity wall = (Wall) amountOfWalls.get(iWalls);
+
+        posPart = wall.getPart(PositionPart.class);
+
+        posPart.setX(x);
+        posPart.setY(y);
+        posPart.setWidth(width);
+        posPart.setHeight(height);
+
         iWalls++;
-        
-        if(iWalls==27){
+
+        if (iWalls == 27) {
             iWalls = 0;
         }
-        
+
     }
 }
