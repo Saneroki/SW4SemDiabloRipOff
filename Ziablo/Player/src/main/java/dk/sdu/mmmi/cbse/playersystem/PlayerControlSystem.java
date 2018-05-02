@@ -24,7 +24,6 @@ import org.openide.util.Lookup;
  */
 public class PlayerControlSystem implements IEntityProcessingService {
 
-    private ICreateBullet createBullet;
     private PositionPart positionPart;
     private boolean test = true;
     private float xFirst;
@@ -32,17 +31,6 @@ public class PlayerControlSystem implements IEntityProcessingService {
     private float difX;
     private float difY;
     
-    /**
-     * Use SPILocator (or netbeans Lookup) to find all implementations of the
-     * ICreateBullet interface. This way we don't have to add a physical Bullet
-     * JAR file. Instead we use whiteboard model to our advantage.
-     */
-    private void instantiateBullet() {
-        for (ICreateBullet bullet : Lookup.getDefault().lookupAll(ICreateBullet.class)) {
-            createBullet = (ICreateBullet) bullet;
-        }
-    }
-
     @Override
     public void process(GameData gameData, World world) {
 
@@ -73,13 +61,9 @@ public class PlayerControlSystem implements IEntityProcessingService {
            
             //Potentially working
             if (gameData.getKeys().isDown(SPACE)) {
-                if (createBullet == null) {
-                    instantiateBullet();
-                }
-                try {
-                    createBullet.createBullet(gameData, world, player);
-                } catch (NullPointerException e) {
-                    System.out.println("Null bullets" + e);
+                ICreateBullet bullet = Lookup.getDefault().lookup(ICreateBullet.class);
+                if (bullet != null) {
+                    bullet.createBullet(gameData, world, player);
                 }
             }
             //positionPart.setRadians(180);
