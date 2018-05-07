@@ -32,13 +32,13 @@ public class CollisionPostProcess implements IPostEntityProcessingService {
     public void process(GameData gameData, World world) {
         for (Entity entity1 : world.getEntities()) {
             for (Entity entity2 : world.getEntities()) {
-                collision(entity1, entity2, world);
+                collision(entity1, entity2, gameData, world);
                 testLife(entity1, entity2, world);
             }
         }
     }
 
-    private void collision(Entity entity1, Entity entity2, World world) {
+    private void collision(Entity entity1, Entity entity2, GameData gameData, World world) {
 
         float dx;
         float dy;
@@ -63,22 +63,13 @@ public class CollisionPostProcess implements IPostEntityProcessingService {
                     world.removeEntity(entity2);
                     return;
                 }
-                collisionWall(entity2);
+                collisionWall(entity2, gameData);
                 return;
             }
         }
 
         if (entity2 instanceof Wall) {
-//            if (RectangleAndCircleCollision(positionPart2.getX(), positionPart2.getY(),
-//                    positionPart2.getHeight(), positionPart2.getWidth(), positionPart1.getX(), positionPart1.getY(), entity1.getRadius())) {
-//
-//                if (entity1 instanceof Bullet) {
-//                    world.removeEntity(entity1);
-//                    return;
-//                }
-//                collisionWall(entity1);
-                return;
-//            }
+            return;
         }
 
         dx = positionPart1.getX() - positionPart2.getX();
@@ -98,14 +89,11 @@ public class CollisionPostProcess implements IPostEntityProcessingService {
                     return;
                 }
             }
+
             if (entity2 instanceof Player) {
-                if (entity1 instanceof Enemy) {
-                    entityTwoLifePart.setIsHit(true);
-                    entityTwoLifePart.setLife(entityTwoLifePart.getLife() - 1);
-                    System.out.println(entity1.getClass().toString() + " COLLIDED WITH: " + entity2.getClass().toString());
-                    return;
-                }
+                return;
             }
+
             if (entity1 instanceof Bullet) {
                 if (entity2 instanceof Enemy) {
                     entityTwoLifePart.setIsHit(true);
@@ -115,28 +103,21 @@ public class CollisionPostProcess implements IPostEntityProcessingService {
                     return;
                 }
             }
+
             if (entity2 instanceof Bullet) {
-                if (entity1 instanceof Enemy) {
-                    entityOneLifePart.setIsHit(true);
-                    entityOneLifePart.setLife(entityOneLifePart.getLife() - 1);
-                    world.removeEntity(entity2);
-                    System.out.println(entity1.getClass().toString() + " COLLIDED WITH: " + entity2.getClass().toString());
-                    return;
-                }
+                return;
             }
+
             if (entity1 instanceof Obstacle) {
-                if(entity2 instanceof Player) {
+                if (entity2 instanceof Player) {
                     collisionOverlap(entity1, entity2);
                     System.out.println(entity1.getClass().toString() + " COLLIDED WITH: " + entity2.getClass().toString());
                     return;
                 }
             }
+
             if (entity2 instanceof Obstacle) {
-                if(entity1 instanceof Player) {
-                    collisionOverlap(entity2, entity1);
-                    System.out.println(entity1.getClass().toString() + " COLLIDED WITH: " + entity2.getClass().toString());
-                    return;
-                }
+                return;
             }
         }
     }
@@ -161,19 +142,23 @@ public class CollisionPostProcess implements IPostEntityProcessingService {
         return (deltaX * deltaX + deltaY * deltaY) < (circRadius * circRadius);
     }
 
-    private void collisionWall(Entity entityNotWall) {
+    private void collisionWall(Entity entityNotWall, GameData gamedata) {
 
         PositionPart posAnything = entityNotWall.getPart(PositionPart.class);
         MovingPart movingPartAnything = entityNotWall.getPart(MovingPart.class);
 
-        if (entityNotWall instanceof Asteroid) {
-            posAnything.setX(posAnything.getX() - (movingPartAnything.getDx() * (float) 0.5));
-            posAnything.setY(posAnything.getY() - (movingPartAnything.getDy() * (float) 0.5));
+        if(entityNotWall instanceof Enemy){
+            movingPartAnything.setLeft(false);
+            movingPartAnything.setRight(false);
+            movingPartAnything.setDown(false);
+            movingPartAnything.setUp(false);
+            posAnything.setX(posAnything.getX() - (movingPartAnything.getDx() * gamedata.getDelta()));// (float) 4));
+            posAnything.setY(posAnything.getY() - (movingPartAnything.getDy() * gamedata.getDelta()));// (float) 4));
             return;
         }
 
-        posAnything.setX(posAnything.getX() - (movingPartAnything.getDx() * (float) 0.02));
-        posAnything.setY(posAnything.getY() - (movingPartAnything.getDy() * (float) 0.02));
+        posAnything.setX(posAnything.getX() - (movingPartAnything.getDx() * gamedata.getDelta())); // float) 0.02));
+        posAnything.setY(posAnything.getY() - (movingPartAnything.getDy() * gamedata.getDelta())); // float) 0.02));
     }
 
     private void collisionOverlap(Entity entityIsPushing, Entity entityGetPushed) {

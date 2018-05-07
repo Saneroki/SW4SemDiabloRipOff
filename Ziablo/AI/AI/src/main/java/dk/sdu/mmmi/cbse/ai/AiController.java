@@ -31,10 +31,10 @@ import org.openide.util.lookup.ServiceProviders;
 )
 public class AiController implements IEntityProcessingService, IGamePluginService {
 
-    Random r = new Random();
-    int getRandom;
-    int movingDuration;
-    int Walk;
+    private Random r = new Random();
+    private int getRandom;
+    private int movingDuration;
+    private int Walk;
 
     @Override
     public void process(GameData data, World world) {
