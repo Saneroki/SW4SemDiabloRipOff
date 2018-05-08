@@ -24,40 +24,34 @@ import static dk.sdu.mmmi.cbse.common.data.GameKeys.S;
  */
 public class PlayerControlSystem implements IEntityProcessingService {
 
-    private PositionPart positionPart;
-    private boolean test = true;
-    private float xFirst;
-    private float yFirst;
     private float difX;
     private float difY;
-    
+
     @Override
     public void process(GameData gameData, World world) {
 
         for (Entity player : world.getEntities(Player.class)) {
-            positionPart = player.getPart(PositionPart.class);
+            PositionPart positionPart = player.getPart(PositionPart.class);
             MovingPart movement = player.getPart(MovingPart.class);
 
-            
-            positionPart.setRadians(setPlayerRotation(gameData));
-            
-            
-            if (gameData.getKeys().isDown(A)){
+            positionPart.setRadians(setPlayerRotation(gameData, player));
+
+            if (gameData.getKeys().isDown(A)) {
                 movement.setDx(-1000f);
             }
-            
-            if (gameData.getKeys().isDown(D)){
+
+            if (gameData.getKeys().isDown(D)) {
                 movement.setDx(1000f);
             }
-            
-            if (gameData.getKeys().isDown(W)){
+
+            if (gameData.getKeys().isDown(W)) {
                 movement.setDy(1000f);
-            }            
-            if (gameData.getKeys().isDown(S)){
+            }
+            if (gameData.getKeys().isDown(S)) {
                 movement.setDy(-1000f);
             }
             // to fix player stuttering around when not moving.
-            if(!gameData.getKeys().isDown(A) && !gameData.getKeys().isDown(D) && !gameData.getKeys().isDown(W) && !gameData.getKeys().isDown(S)){
+            if (!gameData.getKeys().isDown(A) && !gameData.getKeys().isDown(D) && !gameData.getKeys().isDown(W) && !gameData.getKeys().isDown(S)) {
                 movement.setDx(0);
                 movement.setDy(0);
             }
@@ -70,7 +64,7 @@ public class PlayerControlSystem implements IEntityProcessingService {
             //positionPart.setRadians(180);
             movement.process(gameData, player);
             positionPart.process(gameData, player);
-            
+
             updateShape(player);
         }
     }
@@ -78,7 +72,7 @@ public class PlayerControlSystem implements IEntityProcessingService {
     private void updateShape(Entity entity) {
         float[] shapex = entity.getShapeX();
         float[] shapey = entity.getShapeY();
-        positionPart = entity.getPart(PositionPart.class);
+        PositionPart positionPart = entity.getPart(PositionPart.class);
         float x = positionPart.getX();
         float y = positionPart.getY();
         float radians = positionPart.getRadians();
@@ -98,21 +92,17 @@ public class PlayerControlSystem implements IEntityProcessingService {
         entity.setShapeX(shapex);
         entity.setShapeY(shapey);
     }
-    
-    private float setPlayerRotation(GameData gameData) {
-        if (test) {
-            xFirst = positionPart.getX();
-            yFirst = positionPart.getY();
-            test = false;
-        }
-        
-        difX = positionPart.getX() - xFirst;
-        difY = positionPart.getY() - yFirst;
+
+    private float setPlayerRotation(GameData gameData, Entity entity) {
+
+        PositionPart positionPart = entity.getPart(PositionPart.class);
+
+        difX = positionPart.getX() - (gameData.getDisplayWidth() / 2);
+        difY = positionPart.getY() - (gameData.getDisplayHeight() / 2);
 
         float angle = (float) Math.atan2((gameData.getMousePositionY() + difY) - positionPart.getY(), (gameData.getMousePositionX() + difX) - positionPart.getX());
 
         return angle;
     }
-
 
 }

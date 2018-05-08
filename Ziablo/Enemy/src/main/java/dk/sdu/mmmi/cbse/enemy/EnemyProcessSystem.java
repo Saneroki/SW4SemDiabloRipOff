@@ -24,14 +24,11 @@ import org.openide.util.lookup.ServiceProvider;
 
 public class EnemyProcessSystem implements IEntityProcessingService {
 
-    Random random = new Random();
-
     @Override
     public void process(GameData gameData, World world) {
 
         for (Entity enemy : world.getEntities(Enemy.class)) {
-            int i = random.nextInt(100);
-
+            
             PositionPart positionPart = enemy.getPart(PositionPart.class);
             MovingPart movingPart = enemy.getPart(MovingPart.class);
 
@@ -58,11 +55,10 @@ public class EnemyProcessSystem implements IEntityProcessingService {
                 if (distance < 300 && distance > 15) {
                     enemy.setFind(true);
                 } else if (distance < 18) {
-                    enemy.setFindFalse();
+                    enemy.setFind(false);
                 } else {
-                    enemy.setFindFalse();
+                    enemy.setFind(false);
                 }
-//                enemy.setFindFalse();
 
             }
 

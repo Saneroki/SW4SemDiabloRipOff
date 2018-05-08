@@ -37,7 +37,7 @@ public class AiController implements IEntityProcessingService, IGamePluginServic
     private int Walk;
     private float idleMoveSpeed = 100;
     private float chargeMoveSpeed = 150;
-    
+
     @Override
     public void process(GameData data, World world) {
         for (Entity e : world.getEntities(Enemy.class)) {
@@ -50,7 +50,7 @@ public class AiController implements IEntityProcessingService, IGamePluginServic
 //                }
                     if (e.getFind()) {
                         chargeTarget(e, p, world, data);
-                    } else{
+                    } else {
                         walkWithoutPurpose((Enemy) e, data);
                     }
                 }
@@ -137,7 +137,7 @@ public class AiController implements IEntityProcessingService, IGamePluginServic
         MovingPart movE = enemy.getPart(MovingPart.class);
 
         PositionPart posP = player.getPart(PositionPart.class);
-        MovingPart movP = player.getPart(MovingPart.class);
+        //       MovingPart movP = player.getPart(MovingPart.class);
 
         float EColX = posE.getX() + data.getDisplayWidth() / 2;
         float EColY = posE.getY() + data.getDisplayHeight() / 2;
@@ -148,36 +148,33 @@ public class AiController implements IEntityProcessingService, IGamePluginServic
 //        float PColX = 
         float xLocation = posE.getX();
         float yLocation = posE.getY();
-        
-        for (Entity p : world.getEntities()) {
-            if (p instanceof Player) {
 
-                if (EColX < PColX) {
+        //       for (Entity p : world.getEntities()) { // think this loop will make it itterate two times in all process's
+        if (EColX < PColX) {
 //                    enemy.setDirection(EntityDirection.RIGHT);
-                    movE.setRight(true);
-                    xLocation += chargeMoveSpeed * data.getDelta();
-                    posE.setX(xLocation);
+            movE.setRight(true);
+            xLocation += chargeMoveSpeed * data.getDelta();
+            posE.setX(xLocation);
 //                    enemy.setX(xLocation);
-                }
-                if (EColX > PColX) {
-//                    enemy.setDirection(EntityDirection.LEFT);
-                    movE.setLeft(true);
-                    xLocation -= chargeMoveSpeed * data.getDelta();
-//                    enemy.setX(xLocation);
-                    posE.setX(xLocation);
-                }
-                if (EColY < PColY) {
-                    yLocation += chargeMoveSpeed * data.getDelta();
-//                    enemy.setY(yLocation);
-                    posE.setY(yLocation);
-                }
-                if (EColY > PColY) {
-                    yLocation -= chargeMoveSpeed * data.getDelta();
-//                    enemy.setY(yLocation);
-                    posE.setY(yLocation);
-                }
-            }
         }
+        if (EColX > PColX) {
+//                    enemy.setDirection(EntityDirection.LEFT);
+            movE.setLeft(true);
+            xLocation -= chargeMoveSpeed * data.getDelta();
+//                    enemy.setX(xLocation);
+            posE.setX(xLocation);
+        }
+        if (EColY < PColY) {
+            yLocation += chargeMoveSpeed * data.getDelta();
+//                    enemy.setY(yLocation);
+            posE.setY(yLocation);
+        }
+        if (EColY > PColY) {
+            yLocation -= chargeMoveSpeed * data.getDelta();
+//                    enemy.setY(yLocation);
+            posE.setY(yLocation);
+        }
+//        }
     }
 
     @Override

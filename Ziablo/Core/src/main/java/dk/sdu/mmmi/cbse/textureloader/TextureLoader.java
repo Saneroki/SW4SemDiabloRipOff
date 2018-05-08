@@ -8,6 +8,7 @@ package dk.sdu.mmmi.cbse.textureloader;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import dk.sdu.mmmi.cbse.common.data.Entity;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,8 +26,6 @@ import static dk.sdu.mmmi.cbse.textureloader.ComponentAnimator.ComponentAnimator
  */
 public class TextureLoader {
 
-    private World gameworld;
-
     private Animation player_idle;
 
     private Animation enemy_idle;
@@ -39,37 +38,35 @@ public class TextureLoader {
 
     private static boolean player = false;
 
-    public void loadRenderingMaterial(World gameworld) {
-        if (!gameworld.getSprites().isEmpty()) {
-            for (TexturePath sheet : gameworld.getSprites()) {
+    public void loadRenderingMaterial(World world) {
+        if (!world.getSprites().isEmpty()) {
+            for (TexturePath sheet : world.getSprites()) {
 
                 if (sheet.getService().equals(Enemy.class)) {
                     enemy_idle = ComponentAnimator(loadTexture(sheet.getModule(), sheet.getResource()), 4, 4, 3f);
                     System.out.println("Texture animation: " + enemy_idle + " " + sheet.getModule());
-                    gameworld.removeSprite(sheet);
+                    world.removeSprite(sheet);
                 }
 
                 if (sheet.getService().equals(Player.class)) {
                     player_idle = ComponentAnimator(loadTexture(sheet.getModule(), sheet.getResource()), 1, 3, 3f);
                     System.out.println("Texture animation: " + player_idle + " " + sheet.getModule());
-                    gameworld.removeSprite(sheet);
+                    world.removeSprite(sheet);
                 }
                 
                 if (sheet.getService().equals(Bullet.class)) {
                     projectile = ComponentAnimator(loadTexture(sheet.getModule(), sheet.getResource()), 1, 1, 1f);
                     System.out.println("Texture animation: " + projectile + " " + sheet.getModule());
-                    gameworld.removeSprite(sheet);
+                    world.removeSprite(sheet);
                 }
                 
                 if (sheet.getService().equals(Obstacle.class)) {
                     obstacle = ComponentAnimator(loadTexture(sheet.getModule(), sheet.getResource()), 1, 1, 1f);
                     System.out.println("Texture animation: " + obstacle + " " + sheet.getModule());
-                    gameworld.removeSprite(sheet);
+                    world.removeSprite(sheet);
                 }
-
             }
         }
-
     }
     
 

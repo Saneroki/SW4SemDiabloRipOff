@@ -23,7 +23,11 @@ import dk.sdu.mmmi.cbse.managers.GameInputProcessor;
 import dk.sdu.mmmi.cbse.map.MapLoader;
 import dk.sdu.mmmi.cbse.textureloader.TextureLoader;
 import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import org.openide.util.Lookup;
+import org.openide.util.LookupEvent;
+import org.openide.util.LookupListener;
 
 public class Game
         implements ApplicationListener {
@@ -35,7 +39,10 @@ public class Game
     private MapLoader ML;
     //So we replace the "SPILocator" with this Lookup. This will be our whiteboard register in netbeans modules
     private final Lookup lookup = Lookup.getDefault();
-
+    
+    private List<IGamePluginService> gamePlugins = new CopyOnWriteArrayList<>();
+    private Lookup.Result<IGamePluginService> result;
+    
     private final GameData gameData = new GameData();
 
     private World world = new World();
@@ -61,9 +68,14 @@ public class Game
         
         ML.loadMap(gameData);
         
+        result = lookup.lookupResult(IGamePluginService.class);
+        result.addLookupListener(lookupListener);
+        result.allItems();
+        
         // Lookup all Game Plugins using ServiceLoader
-        for (IGamePluginService iGamePlugin : getPluginServices()) {
+        for (IGamePluginService iGamePlugin : result.allInstances()) {
             iGamePlugin.start(gameData, world);
+            gamePlugins.add(iGamePlugin);
         }
         ML.createWalls(gameData);
     }
@@ -191,10 +203,6 @@ public class Game
     public void dispose() {
     }
 
-    private Collection<? extends IGamePluginService> getPluginServices() {
-        return lookup.lookupAll(IGamePluginService.class);
-    }
-
     private Collection<? extends IEntityProcessingService> getEntityProcessingServices() {
         return lookup.lookupAll(IEntityProcessingService.class);
     }
@@ -202,4 +210,30 @@ public class Game
     private Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices() {
         return lookup.lookupAll(IPostEntityProcessingService.class);
     }
+    
+    private final LookupListener lookupListener = new LookupListener() {
+        @Override
+        public void resultChanged(LookupEvent le) {
+
+            Collection<? extends IGamePluginService> updated = result.allInstances();
+
+            for (IGamePluginService us : updated) {
+                // Newly installed modules
+                if (!gamePlugins.contains(us)) {
+                    us.start(gameData, world);
+                    gamePlugins.add(us);
+                }
+            }
+
+            // Stop and remove module
+            for (IGamePluginService gs : gamePlugins) {
+                if (!updated.contains(gs)) {
+                    gs.stop(gameData, world);
+                    gamePlugins.remove(gs);
+                }
+            }
+        }
+
+    };
+    
 }

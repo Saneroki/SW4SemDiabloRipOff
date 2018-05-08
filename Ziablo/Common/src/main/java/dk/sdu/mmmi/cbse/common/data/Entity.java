@@ -46,10 +46,6 @@ public class Entity implements Serializable {
         this.target = target;
     }
 
-    public void setFindFalse() {
-        this.target = false;
-    }
-
     public boolean getFind() {
         return this.target;
     }

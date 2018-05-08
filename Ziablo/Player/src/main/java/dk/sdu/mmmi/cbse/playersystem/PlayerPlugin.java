@@ -9,6 +9,7 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.texture.TexturePath;
 import dk.sdu.mmmi.cbse.commonplayer.Player;
+import org.openide.modules.ModuleInstall;
 
 
 import org.openide.util.lookup.ServiceProvider;
@@ -18,14 +19,14 @@ import org.openide.util.lookup.ServiceProvider;
 public class PlayerPlugin implements IGamePluginService {
 
     private Entity player;
-
+    private TexturePath idle;
     public PlayerPlugin() {
     }
 
     @Override
     public void start(GameData gameData, World world) {
         
-        TexturePath idle = new TexturePath("sprite/idle.png", PlayerPlugin.class, Player.class);
+        idle = new TexturePath("sprite/idle.png", PlayerPlugin.class, Player.class);
         world.addSprite(idle);
         
         // Add entities to the world
@@ -49,7 +50,6 @@ public class PlayerPlugin implements IGamePluginService {
         player.add(new LifePart(3000000, Float.MAX_VALUE));
         player.setRadius(30);
         
-        
         return player;
     }
 
@@ -58,5 +58,4 @@ public class PlayerPlugin implements IGamePluginService {
         // Remove entities
         world.removeEntity(player);
     }
-
 }
