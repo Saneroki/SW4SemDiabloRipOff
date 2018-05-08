@@ -57,9 +57,6 @@ public class PlayerControlSystem implements IEntityProcessingService {
                 movement.setDy(-100f);
             }
             
-            
-           
-            //Potentially working
             if (gameData.getKeys().isDown(SPACE)) {
                 ICreateBullet bullet = Lookup.getDefault().lookup(ICreateBullet.class);
                 if (bullet != null) {

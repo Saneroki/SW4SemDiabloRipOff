@@ -18,6 +18,7 @@
                     <useOSGiDependencies>true</useOSGiDependencies>
                     <publicPackages>
                         <publicPackage>dk.sdu.mmmi.cbse.commonenemy</publicPackage>
+                        <publicPackage>dk.sdu.mmmi.cbse.commonenemy.services</publicPackage>
                     </publicPackages>
                 </configuration>
             </plugin>

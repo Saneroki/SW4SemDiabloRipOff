@@ -14,6 +14,6 @@ import dk.sdu.mmmi.cbse.common.data.World;
  */
 public interface ICreateWall {
     
-    void createWalls(float x, float y, float width, float height);
+    void createWalls(float x, float y, float width, float height, GameData gameData);
     
 }

@@ -37,6 +37,8 @@ public class ObstacleProcessSystem implements IEntityProcessingService {
             MovingPart movingPart = obstacle.getPart(MovingPart.class);
             LifePart lifePart = obstacle.getPart(LifePart.class);
             
+            obstacleWrapper(positionPart, gameData);
+            
             movingPart.process(gameData, obstacle);
             positionPart.process(gameData, obstacle);
             lifePart.process(gameData, obstacle);
@@ -45,7 +47,22 @@ public class ObstacleProcessSystem implements IEntityProcessingService {
         }
 
     }
-
+    
+    private void obstacleWrapper(PositionPart positionPart, GameData gameData) {
+        if (positionPart.getX() > gameData.getMapWidth()) {
+            positionPart.setX(0);
+        }
+        if(positionPart.getX() < 0){
+            positionPart.setX(gameData.getMapWidth());
+        }
+        if (positionPart.getY() > gameData.getMapHeight()) {
+            positionPart.setY(0);
+        }
+        if(positionPart.getY() < 0){
+            positionPart.setY(gameData.getMapHeight());
+        }
+    }
+    
     private void updateShape(Entity entity) {
         float[] shapex = entity.getShapeX();
         float[] shapey = entity.getShapeY();

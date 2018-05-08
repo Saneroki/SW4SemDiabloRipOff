@@ -10,6 +10,10 @@ public class GameData {
     private float delta;
     private int displayWidth;
     private int displayHeight;
+    private int mapWidth;
+    private int mapHeight;
+    private int enemyAmount;
+    private int wallAmount;
     private final GameKeys keys = new GameKeys();
     private int[] mousePosition;
     private Object camera;
@@ -80,7 +84,39 @@ public class GameData {
     public int getDisplayHeight() {
         return displayHeight;
     }
+    
+    public void setMapWidth(int width) {
+        this.mapWidth = width;
+    }
 
+    public int getMapWidth() {
+        return mapWidth;
+    }
+
+    public void setMapHeight(int height) {
+        this.mapHeight = height;
+    }
+
+    public int getMapHeight() {
+        return mapHeight;
+    }
+    
+    public void setEnemyAmount(int enemyAmount) {
+        this.enemyAmount = enemyAmount;
+    }
+
+    public int getEnemyAmount() {
+        return enemyAmount;
+    }
+    
+    public void setWallAmount(int wallAmount) {
+        this.wallAmount = wallAmount;
+    }
+
+    public int getWallAmount() {
+        return wallAmount;
+    }
+    
     public <E extends Event> List<Event> getEvents(Class<E> type, String sourceID) {
         List<Event> r = new ArrayList();
         for (Event event : events) {

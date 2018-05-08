@@ -27,6 +27,7 @@ import dk.sdu.mmmi.cbse.commonenemy.Enemy;
 import dk.sdu.mmmi.cbse.commonobstacle.Obstacle;
 import dk.sdu.mmmi.cbse.commonplayer.Player;
 import dk.sdu.mmmi.cbse.managers.GameInputProcessor;
+import dk.sdu.mmmi.cbse.map.MapLoader;
 import dk.sdu.mmmi.cbse.textureloader.TextureLoader;
 import java.util.Collection;
 import org.openide.util.Lookup;
@@ -34,14 +35,11 @@ import org.openide.util.Lookup;
 public class Game
         implements ApplicationListener {
 
-    private TiledMap map;
-    private OrthogonalTiledMapRenderer renderer;
-
     private static OrthographicCamera cam;
     private ShapeRenderer sr;
     private SpriteBatch batch;
     private TextureLoader TL;
-
+    private MapLoader ML;
     //So we replace the "SPILocator" with this Lookup. This will be our whiteboard register in netbeans modules
     private final Lookup lookup = Lookup.getDefault();
 
@@ -62,34 +60,19 @@ public class Game
         sr = new ShapeRenderer();
         batch = new SpriteBatch();
         TL = new TextureLoader();
-
+        ML = new MapLoader();
+        
         Gdx.input.setInputProcessor(
                 new GameInputProcessor(gameData)
         );
-
+        
+        ML.loadMap(gameData);
+        
         // Lookup all Game Plugins using ServiceLoader
         for (IGamePluginService iGamePlugin : getPluginServices()) {
             iGamePlugin.start(gameData, world);
         }
-
-        map = new TmxMapLoader().load("maps/woodMap.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map);
-
-        for (ICreateWall iCreateWall : getWallServices()) {
-            for (MapObject object : map.getLayers().get("Object Layer 1").getObjects()) {
-                if (object instanceof RectangleMapObject) {
-                    RectangleMapObject rectObject = (RectangleMapObject) object;
-                    Rectangle rect = rectObject.getRectangle();
-                    iCreateWall.createWalls(rect.x, rect.y - 99200, rect.width, rect.height);
-//                    System.out.println(rect.x + " " + (rect.y - 99200) );
-//                    sr.setColor(1, 1, 1, 1);
-//                    sr.begin(ShapeRenderer.ShapeType.Line);
-//                    sr.line(rect.x, rect.y-99200, 0, 0);
-//                    sr.rect(rect.x, rect.y - 99200, rect.width, rect.height);
-//                    sr.end();
-                }
-            }
-        }
+        ML.createWalls(gameData);
     }
 
     @Override
@@ -115,12 +98,11 @@ public class Game
     }
 
     private void update() {
-        // Update
+
         for (IEntityProcessingService entityProcessorService : getEntityProcessingServices()) {
             entityProcessorService.process(gameData, world);
         }
 
-        // MAYBE YOUR NOT ALLOWED TO ALSO ADD POST PROCESS UPDATER I DONT KNOW ASK THE TEACHER OR TAS
         for (IPostEntityProcessingService entityProcessorService : getPostEntityProcessingServices()) {
             entityProcessorService.process(gameData, world);
         }
@@ -179,8 +161,7 @@ public class Game
 
     private void draw() {
 
-        renderer.setView(cam);
-        renderer.render();
+        ML.renderCam(cam);
 
         sr.setProjectionMatrix(cam.combined);
 
@@ -218,28 +199,16 @@ public class Game
 
     @Override
     public void dispose() {
-        map.dispose();
-        renderer.dispose();
-        sr.dispose();
-        batch.dispose();
     }
 
-    //previously (last week) we used "SPILocater" for java jdk serviceloader. Now we use "Lookup"
     private Collection<? extends IGamePluginService> getPluginServices() {
         return lookup.lookupAll(IGamePluginService.class);
     }
 
-    private Collection<? extends ICreateWall> getWallServices() {
-        return lookup.lookupAll(ICreateWall.class);
-    }
-
-    //previously (last week) we used "SPILocater" for java jdk serviceloader. Now we use "Lookup"
     private Collection<? extends IEntityProcessingService> getEntityProcessingServices() {
         return lookup.lookupAll(IEntityProcessingService.class);
     }
 
-    //previously (last week) we used "SPILocater" for java jdk serviceloader. Now we use "Lookup"
-    // MAYBE YOUR NOT ALLOWED TO ALSO ADD POST PROCESS LIST AND GETTER, I DONT KNOW ASK THE TEACHER OR TAS. DOES THIS BREAK THE WHITEBOARD MODEL?
     private Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices() {
         return lookup.lookupAll(IPostEntityProcessingService.class);
     }

@@ -6,7 +6,7 @@
         <artifactId>Ziablo-parent</artifactId>
         <version>1.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>Asteroid</artifactId>
+    <artifactId>CommonWall</artifactId>
     <packaging>nbm</packaging>
     <build>
         <plugins>
@@ -16,6 +16,9 @@
                 <extensions>true</extensions>
                 <configuration>
                     <useOSGiDependencies>true</useOSGiDependencies>
+                    <publicPackages>
+                        <publicPackage>dk.sdu.mmmi.cbse.commonwall</publicPackage>
+                    </publicPackages>
                 </configuration>
             </plugin>
             <plugin>
@@ -37,12 +40,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>Common</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-openide-modules</artifactId>
-            <version>RELEASE82</version>
-            <type>jar</type>
         </dependency>
     </dependencies>
     <properties>

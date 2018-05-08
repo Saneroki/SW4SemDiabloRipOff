@@ -15,6 +15,7 @@ import dk.sdu.mmmi.cbse.common.services.ICreateObstacle;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.texture.TexturePath;
 import dk.sdu.mmmi.cbse.commonobstacle.Obstacle;
+import java.util.Random;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -34,8 +35,9 @@ public class ObstaclePlugin implements IGamePluginService, ICreateObstacle {
         float acceleration = 0;
         float maxSpeed = 0;
         float rotationSpeed = 0;
-        float x = gameData.getDisplayWidth() / 5;
-        float y = gameData.getDisplayHeight() / 5;
+        Random rand = new Random();
+        float x = (rand.nextInt(gameData.getMapWidth()) + 1);
+        float y = (rand.nextInt(gameData.getMapHeight()) + 1);
         float radians = 3.1415f / 2;
         int life = Integer.MAX_VALUE;
         float lifeExpiration = Float.MAX_VALUE;
@@ -53,12 +55,17 @@ public class ObstaclePlugin implements IGamePluginService, ICreateObstacle {
 
     @Override
     public void start(GameData gameData, World world) {
+        int i = 0;
+        
         TexturePath idle = new TexturePath("sprite/boulder.png", ObstaclePlugin.class, Obstacle.class);
         world.addSprite(idle);
         
         // Add entities to the world
-        createObstacle(gameData);
-        world.addEntity(obstacle);
+        while(i < 20){
+            createObstacle(gameData);
+            world.addEntity(obstacle);
+            i++;
+        }
         System.out.println("dk.sdu.mmmi.cbse.enemy.ObstaclePlugin.start()");
     }
 

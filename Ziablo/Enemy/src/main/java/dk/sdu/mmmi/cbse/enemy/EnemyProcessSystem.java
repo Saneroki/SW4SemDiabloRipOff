@@ -5,7 +5,6 @@
  */
 package dk.sdu.mmmi.cbse.enemy;
 
-
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
@@ -21,7 +20,6 @@ import org.openide.util.lookup.ServiceProvider;
  *
  * @author Sadik
  */
-
 @ServiceProvider(service = IEntityProcessingService.class)
 
 public class EnemyProcessSystem implements IEntityProcessingService {
@@ -36,7 +34,9 @@ public class EnemyProcessSystem implements IEntityProcessingService {
 
             PositionPart positionPart = enemy.getPart(PositionPart.class);
             MovingPart movingPart = enemy.getPart(MovingPart.class);
-            
+
+            enemyWrapper(positionPart, gameData);
+
             for (Entity p : world.getEntities(Player.class)) {
                 PositionPart posE = enemy.getPart(PositionPart.class);
 
@@ -47,7 +47,7 @@ public class EnemyProcessSystem implements IEntityProcessingService {
 
                 float PColX = posP.getX() + gameData.getDisplayWidth() / 2;
                 float PColY = posP.getY() + gameData.getDisplayHeight() / 2;
-                
+
                 float x1 = EColX;
                 float y1 = EColY;
                 float x2 = PColX;
@@ -55,17 +55,17 @@ public class EnemyProcessSystem implements IEntityProcessingService {
 
                 double distance = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
 //                System.out.println(distance);
-                if(distance < 300 && distance > 15){
+                if (distance < 300 && distance > 15) {
                     enemy.setFind(true);
-                }else if(distance < 18){
+                } else if (distance < 18) {
                     enemy.setFindFalse();
-                }else{
+                } else {
                     enemy.setFindFalse();
                 }
 //                enemy.setFindFalse();
-                
+
             }
-            
+
 //            if (i % 2 == 0) {
 //                movingPart.setRight(true);
 //                movingPart.setLeft(false);
@@ -80,7 +80,6 @@ public class EnemyProcessSystem implements IEntityProcessingService {
 //            if (i % 5 == 0) {
 //                movingPart.setUp(true);
 //            }
-
             movingPart.process(gameData, enemy);
             positionPart.process(gameData, enemy);
 
@@ -88,7 +87,21 @@ public class EnemyProcessSystem implements IEntityProcessingService {
         }
 
     }
-    
+
+    private void enemyWrapper(PositionPart positionPart, GameData gameData) {
+        if (positionPart.getX() > gameData.getMapWidth()) {
+            positionPart.setX(0);
+        }
+        if(positionPart.getX() < 0){
+            positionPart.setX(gameData.getMapWidth());
+        }
+        if (positionPart.getY() > gameData.getMapHeight()) {
+            positionPart.setY(0);
+        }
+        if(positionPart.getY() < 0){
+            positionPart.setY(gameData.getMapHeight());
+        }
+    }
 
     private void updateShape(Entity entity) {
         float[] shapex = entity.getShapeX();
