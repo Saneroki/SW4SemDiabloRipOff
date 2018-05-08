@@ -44,5 +44,4 @@ public class MapProcessSystem implements IEntityProcessingService {
             lastProcessEnemyAmount = gameData.getEnemyAmount();
         }
     }
-
 }

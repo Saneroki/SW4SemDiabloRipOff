@@ -14,6 +14,7 @@ public class GameData {
     private int mapHeight;
     private int enemyAmount;
     private int wallAmount;
+    private int score;
     private final GameKeys keys = new GameKeys();
     private int[] mousePosition;
     private Object camera;
@@ -115,6 +116,14 @@ public class GameData {
 
     public int getWallAmount() {
         return wallAmount;
+    }
+    
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
     
     public <E extends Event> List<Event> getEvents(Class<E> type, String sourceID) {

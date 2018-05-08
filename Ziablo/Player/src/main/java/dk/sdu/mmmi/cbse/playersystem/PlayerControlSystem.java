@@ -2,11 +2,7 @@ package dk.sdu.mmmi.cbse.playersystem;
 
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
-import static dk.sdu.mmmi.cbse.common.data.GameKeys.LEFT;
-import static dk.sdu.mmmi.cbse.common.data.GameKeys.RIGHT;
 import static dk.sdu.mmmi.cbse.common.data.GameKeys.SPACE;
-import static dk.sdu.mmmi.cbse.common.data.GameKeys.UP;
-import static dk.sdu.mmmi.cbse.common.data.GameKeys.DOWN;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
@@ -15,6 +11,10 @@ import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.commonplayer.Player;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.Lookup;
+import static dk.sdu.mmmi.cbse.common.data.GameKeys.W;
+import static dk.sdu.mmmi.cbse.common.data.GameKeys.A;
+import static dk.sdu.mmmi.cbse.common.data.GameKeys.D;
+import static dk.sdu.mmmi.cbse.common.data.GameKeys.S;
 
 @ServiceProvider(service = IEntityProcessingService.class)
 
@@ -42,21 +42,25 @@ public class PlayerControlSystem implements IEntityProcessingService {
             positionPart.setRadians(setPlayerRotation(gameData));
             
             
-            if (gameData.getKeys().isDown(LEFT)){
-                movement.setDx(-100f);
+            if (gameData.getKeys().isDown(A)){
+                movement.setDx(-1000f);
             }
             
-            if (gameData.getKeys().isDown(RIGHT)){
-                movement.setDx(100f);
+            if (gameData.getKeys().isDown(D)){
+                movement.setDx(1000f);
             }
             
-            if (gameData.getKeys().isDown(UP)){
-                movement.setDy(100f);
+            if (gameData.getKeys().isDown(W)){
+                movement.setDy(1000f);
             }            
-            if (gameData.getKeys().isDown(DOWN)){
-                movement.setDy(-100f);
+            if (gameData.getKeys().isDown(S)){
+                movement.setDy(-1000f);
             }
-            
+            // to fix player stuttering around when not moving.
+            if(!gameData.getKeys().isDown(A) && !gameData.getKeys().isDown(D) && !gameData.getKeys().isDown(W) && !gameData.getKeys().isDown(S)){
+                movement.setDx(0);
+                movement.setDy(0);
+            }
             if (gameData.getKeys().isDown(SPACE)) {
                 ICreateBullet bullet = Lookup.getDefault().lookup(ICreateBullet.class);
                 if (bullet != null) {

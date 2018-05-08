@@ -31,9 +31,9 @@ public class EnemyPlugin implements IGamePluginService, ISpawnEnemy {
     private Entity enemy;
     private TexturePath idle = new TexturePath("sprite/Axe_Bandit.png", EnemyPlugin.class, Enemy.class);
     private ArrayList amountOfEnemies = new ArrayList();
-    private float deacceleration = 900;
-    private float acceleration = 50;
-    private float maxSpeed = 10;
+    private float deacceleration = 1000;
+    private float acceleration = 500;
+    private float maxSpeed = 300;
     private float rotationSpeed = 2;
     private float radians = 3.1415f / 2;
     
@@ -61,7 +61,6 @@ public class EnemyPlugin implements IGamePluginService, ISpawnEnemy {
 
     @Override
     public void spawnEnemy(GameData gameData, World world) {
-        System.out.println("fra enemy interface");
         Entity entityEnemy = new Enemy();
         entityEnemy.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
 

@@ -35,7 +35,9 @@ public class AiController implements IEntityProcessingService, IGamePluginServic
     private int getRandom;
     private int movingDuration;
     private int Walk;
-
+    private float idleMoveSpeed = 100;
+    private float chargeMoveSpeed = 150;
+    
     @Override
     public void process(GameData data, World world) {
         for (Entity e : world.getEntities(Enemy.class)) {
@@ -77,7 +79,7 @@ public class AiController implements IEntityProcessingService, IGamePluginServic
         if (getRandom <= 25 && !me.isRight() && !me.isUp() && !me.isDown()) {
             me.setLeft(true);
 //            me.setDirection(EntityDirection.LEFT);
-            me.setDx(-25f);
+            me.setDx(-idleMoveSpeed);
 
             if (getRandom > 50) {
                 me.setDy(0f);
@@ -86,21 +88,21 @@ public class AiController implements IEntityProcessingService, IGamePluginServic
         if (getRandom > 25 && getRandom <= 50 && !me.isLeft() && !me.isUp() && !me.isDown()) {
             me.setRight(true);
 //            e.setDirection(EntityDirection.RIGHT);
-            me.setDx(25);
+            me.setDx(idleMoveSpeed);
             if (getRandom < 50) {
                 me.setDy(0);
             }
         }
         if (getRandom > 50 && getRandom <= 75 && !me.isLeft() && !me.isRight() && !me.isDown()) {
             me.setUp(true);
-            me.setDy(25);
+            me.setDy(idleMoveSpeed);
             if (getRandom < 50) {
                 me.setDx(0);
             }
         }
         if (getRandom > 75 && getRandom <= 101 && !me.isLeft() && !me.isRight() && !me.isUp()) {
             me.setDown(true);
-            me.setDy(-25);
+            me.setDy(-idleMoveSpeed);
             if (getRandom > 50) {
                 me.setDx(0);
             }
@@ -153,24 +155,24 @@ public class AiController implements IEntityProcessingService, IGamePluginServic
                 if (EColX < PColX) {
 //                    enemy.setDirection(EntityDirection.RIGHT);
                     movE.setRight(true);
-                    xLocation += 40 * data.getDelta();
+                    xLocation += chargeMoveSpeed * data.getDelta();
                     posE.setX(xLocation);
 //                    enemy.setX(xLocation);
                 }
                 if (EColX > PColX) {
 //                    enemy.setDirection(EntityDirection.LEFT);
                     movE.setLeft(true);
-                    xLocation -= 40 * data.getDelta();
+                    xLocation -= chargeMoveSpeed * data.getDelta();
 //                    enemy.setX(xLocation);
                     posE.setX(xLocation);
                 }
                 if (EColY < PColY) {
-                    yLocation += 40 * data.getDelta();
+                    yLocation += chargeMoveSpeed * data.getDelta();
 //                    enemy.setY(yLocation);
                     posE.setY(yLocation);
                 }
                 if (EColY > PColY) {
-                    yLocation -= 40 * data.getDelta();
+                    yLocation -= chargeMoveSpeed * data.getDelta();
 //                    enemy.setY(yLocation);
                     posE.setY(yLocation);
                 }

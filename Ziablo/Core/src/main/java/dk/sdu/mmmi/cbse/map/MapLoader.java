@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.Rectangle;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.services.ICreateWall;
 import java.util.Collection;
+import java.util.Random;
 import org.openide.util.Lookup;
 
 /**
@@ -27,9 +28,18 @@ public class MapLoader {
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
     private final Lookup lookup = Lookup.getDefault();
+    private String loadMapRandom;
     
     public void loadMap(GameData gameData) {
-        map = new TmxMapLoader().load("maps/woodMap.tmx");
+        Random rand = new Random();
+        int i = (rand.nextInt(2) + 1);
+        
+        if(i == 1) {
+            loadMapRandom = "maps/map_black_stone_done.tmx";
+        } else {
+            loadMapRandom = "maps/woodMap.tmx";
+        }
+        map = new TmxMapLoader().load(loadMapRandom);
         renderer = new OrthogonalTiledMapRenderer(map);
         MapProperties prop = map.getProperties();
         

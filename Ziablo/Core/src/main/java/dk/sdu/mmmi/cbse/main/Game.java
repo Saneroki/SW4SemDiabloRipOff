@@ -8,12 +8,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
@@ -21,7 +15,6 @@ import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
-import dk.sdu.mmmi.cbse.common.services.ICreateWall;
 import dk.sdu.mmmi.cbse.commonbullet.Bullet;
 import dk.sdu.mmmi.cbse.commonenemy.Enemy;
 import dk.sdu.mmmi.cbse.commonobstacle.Obstacle;
@@ -147,10 +140,7 @@ public class Game
         int width = getTextureRegion(a).getRegionWidth();
         int height = getTextureRegion(a).getRegionHeight();
         PositionPart p = e.getPart(PositionPart.class);
-        batch.draw(getTextureRegion(
-                a),
-                p.getX() - (width / 2),
-                p.getY() - (height / 2));
+        batch.draw(getTextureRegion(a), p.getX() - (width / 2), p.getY() - (height / 2));
     }
 
     private TextureRegion getTextureRegion(Animation component_animation) {
@@ -165,24 +155,24 @@ public class Game
 
         sr.setProjectionMatrix(cam.combined);
 
-        for (Entity entity : world.getEntities()) {
-
-            sr.setColor(1, 1, 1, 1);
-
-            sr.begin(ShapeRenderer.ShapeType.Line);
-
-            float[] shapex = entity.getShapeX();
-            float[] shapey = entity.getShapeY();
-
-            for (int i = 0, j = shapex.length - 1;
-                    i < shapex.length;
-                    j = i++) {
-
-                sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
-            }
-
-            sr.end();
-        }
+//        for (Entity entity : world.getEntities()) {
+//
+//            sr.setColor(1, 1, 1, 1);
+//
+//            sr.begin(ShapeRenderer.ShapeType.Line);
+//
+//            float[] shapex = entity.getShapeX();
+//            float[] shapey = entity.getShapeY();
+//
+//            for (int i = 0, j = shapex.length - 1;
+//                    i < shapex.length;
+//                    j = i++) {
+//
+//                sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
+//            }
+//
+//            sr.end();
+//        }
     }
 
     @Override
