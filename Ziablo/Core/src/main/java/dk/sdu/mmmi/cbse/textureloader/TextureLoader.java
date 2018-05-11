@@ -43,7 +43,7 @@ public class TextureLoader {
             for (TexturePath sheet : world.getSprites()) {
 
                 if (sheet.getService().equals(Enemy.class)) {
-                    enemy_idle = ComponentAnimator(loadTexture(sheet.getModule(), sheet.getResource()), 4, 4, 3f);
+                    enemy_idle = ComponentAnimator(loadTexture(sheet.getModule(), sheet.getResource()), 1, 1, 1f);
                     System.out.println("Texture animation: " + enemy_idle + " " + sheet.getModule());
                     world.removeSprite(sheet);
                 }

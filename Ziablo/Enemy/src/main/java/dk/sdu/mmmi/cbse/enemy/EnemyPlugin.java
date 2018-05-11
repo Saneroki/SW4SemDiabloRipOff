@@ -29,7 +29,7 @@ public class EnemyPlugin implements IGamePluginService, ISpawnEnemy {
 
     private Random random = new Random();
     private Entity enemy;
-    private TexturePath idle = new TexturePath("sprite/Axe_Bandit.png", EnemyPlugin.class, Enemy.class);
+    private TexturePath idle = new TexturePath("sprite/ghost.png", EnemyPlugin.class, Enemy.class);
     private ArrayList amountOfEnemies = new ArrayList();
     private float deacceleration = 1000;
     private float acceleration = 500;
