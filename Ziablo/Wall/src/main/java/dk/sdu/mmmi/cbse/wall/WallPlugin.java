@@ -48,7 +48,9 @@ public class WallPlugin implements IGamePluginService, ICreateWall {
 
     @Override
     public void stop(GameData gameData, World world) {
-        world.removeEntity(wall);
+        for (Entity wall : world.getEntities(Wall.class)) {
+            world.removeEntity(wall);    
+        }
     }
     
     private List<Entity> getWalls(GameData gameData) {

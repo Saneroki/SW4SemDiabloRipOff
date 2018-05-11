@@ -73,6 +73,9 @@ public class BulletPlugin implements IGamePluginService, ICreateBullet {
 
     @Override
     public void stop(GameData gameData, World world) {
+        for (Entity bullet : world.getEntities(Bullet.class)) {
+            world.removeEntity(bullet);
+        }
     }
     
     private boolean timerCheck(){

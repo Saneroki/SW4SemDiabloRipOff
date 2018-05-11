@@ -72,7 +72,9 @@ public class ObstaclePlugin implements IGamePluginService, ICreateObstacle {
     @Override
     public void stop(GameData gameData, World world) {
         // Remove entities
-        world.removeEntity(obstacle);
+        for (Entity obstacle : world.getEntities(Obstacle.class)) {
+            world.removeEntity(obstacle);
+        }
         System.out.println("dk.sdu.mmmi.cbse.enemy.ObstaclePlugin.stop()");
     }
 }

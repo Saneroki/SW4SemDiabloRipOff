@@ -36,7 +36,7 @@ public class EnemyPlugin implements IGamePluginService, ISpawnEnemy {
     private float maxSpeed = 300;
     private float rotationSpeed = 2;
     private float radians = 3.1415f / 2;
-    
+
     private List<Entity> getEnemies(GameData gameData) {
 
         float x;
@@ -70,7 +70,7 @@ public class EnemyPlugin implements IGamePluginService, ISpawnEnemy {
         entityEnemy.add(new PositionPart(x, y, radians));
         entityEnemy.add(new LifePart(3, Float.MAX_VALUE));
         entityEnemy.setRadius(20);
-        
+
         world.addSprite(idle);
         world.addEntity(entityEnemy);
         gameData.setEnemyAmount(gameData.getEnemyAmount() + 1);
@@ -92,8 +92,10 @@ public class EnemyPlugin implements IGamePluginService, ISpawnEnemy {
     @Override
     public void stop(GameData gameData, World world) {
         // Remove entities
-        world.removeEntity(enemy);
+        for (Entity enemy : world.getEntities(Enemy.class)) {
+            world.removeEntity(enemy);
+            world.removeSprite(idle);
+        }
         System.out.println("dk.sdu.mmmi.cbse.enemy.EnemyPlugin.stop()");
-        world.removeSprite(idle);
     }
 }
