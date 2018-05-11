@@ -41,19 +41,18 @@ public class AiController implements IEntityProcessingService, IGamePluginServic
     @Override
     public void process(GameData data, World world) {
         for (Entity e : world.getEntities(Enemy.class)) {
-            for (Entity p : world.getEntities(Player.class)) {
-                if (e instanceof Enemy) {
-//                if (((Enemy) e).getHasTarget()) {
-//                    chargeTarget((Enemy) e, world, data);
-//                } else if (!((Enemy) e).isAttacking()) {
-//                    walkWithoutPurpose((Enemy) e, data);
-//                }
-                    if (e.getFind()) {
-                        chargeTarget(e, p, world, data);
-                    } else {
-                        walkWithoutPurpose((Enemy) e, data);
+            if (!world.getEntities(Player.class).isEmpty()) {
+                for (Entity p : world.getEntities(Player.class)) {
+                    if (e instanceof Enemy) {
+                        if (e.getFind()) {
+                            chargeTarget(e, p, world, data);
+                        } else {
+                            walkWithoutPurpose((Enemy) e, data);
+                        }
                     }
                 }
+            } else {
+                walkWithoutPurpose((Enemy)e, data);
             }
         }
     }
