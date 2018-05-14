@@ -21,7 +21,7 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
- * @author Sadik
+ * @author Sadik, Ander
  */
 @ServiceProvider(service = IPostEntityProcessingService.class)
 
@@ -46,16 +46,16 @@ public class CollisionPostProcess implements IPostEntityProcessingService {
         if (entity1 instanceof Wall && entity2 instanceof Wall) {
             return;
         }
+        
         PositionPart positionPart1 = entity1.getPart(PositionPart.class);
         PositionPart positionPart2 = entity2.getPart(PositionPart.class);
         float dx = positionPart1.getX() - positionPart2.getX();
         float dy = positionPart1.getY() - positionPart2.getY();
         float distance = (float) Math.sqrt(dx * dx + dy * dy);
-        // TODO; End method when it find a collsion because only one of them can happen. 
+        
         wallCollision(entity1, entity2, world, gameData);
-
+        
         if (distance <= entity1.getRadius() + entity2.getRadius()) {
-            // TODO; End method when it find a collsion because only one of them can happen. 
             playerCollsion(entity1, entity2);
             bulletCollision(entity1, entity2, gameData, world);
             obstacleCollsion(entity1, entity2);
@@ -72,16 +72,13 @@ public class CollisionPostProcess implements IPostEntityProcessingService {
 
                 if (entity2 instanceof Bullet) {
                     world.removeEntity(entity2);
-                    System.out.println(entity1.getClass().toString() + " COLLIDED WITH: " + entity2.getClass().toString());
                     return;
                 }
                 collisionWall(entity2, gameData);
 
-                // The enemies is ghosts so they collide with walls a lot so we dont want to see it in console all the time.
                 if (entity2 instanceof Enemy) {
                     return;
                 }
-                System.out.println(entity1.getClass().toString() + " COLLIDED WITH: " + entity2.getClass().toString());
             }
         }
     }
@@ -90,7 +87,7 @@ public class CollisionPostProcess implements IPostEntityProcessingService {
         if (entity1 instanceof Obstacle) {
             if (entity2 instanceof Player) {
                 collisionOverlap(entity1, entity2);
-                System.out.println(entity1.getClass().toString() + " COLLIDED WITH: " + entity2.getClass().toString());
+                return;
             }
         }
     }
@@ -104,12 +101,11 @@ public class CollisionPostProcess implements IPostEntityProcessingService {
                 entityTwoLifePart.setLife(entityTwoLifePart.getLife() - 1);
                 world.removeEntity(entity1);
                 gameData.setScore(gameData.getScore() + 10);
-                System.out.println(gameData.getScore()); ////////////////////////////////////////////////////////////////////////////////////////////
-                System.out.println(entity1.getClass().toString() + " COLLIDED WITH: " + entity2.getClass().toString());
+                return;
             }
             if (entity2 instanceof Obstacle) {
                 world.removeEntity(entity1);
-                System.out.println(entity1.getClass().toString() + " COLLIDED WITH: " + entity2.getClass().toString());
+                return;
             }
         }
     }
@@ -120,7 +116,7 @@ public class CollisionPostProcess implements IPostEntityProcessingService {
                 LifePart entityOneLifePart = entity1.getPart(LifePart.class);
                 entityOneLifePart.setIsHit(true);
                 entityOneLifePart.setLife(entityOneLifePart.getLife() - 1);
-                System.out.println(entity1.getClass().toString() + " COLLIDED WITH: " + entity2.getClass().toString());
+                return;
             }
         }
     }
@@ -134,7 +130,6 @@ public class CollisionPostProcess implements IPostEntityProcessingService {
             if (entity1 instanceof Enemy) {
                 gameData.setEnemyAmount(gameData.getEnemyAmount() - 1);
                 gameData.setScore(gameData.getScore() + 20);
-                System.out.println(gameData.getScore());//////////////////////////////////////////////////////////////////////////////////
             }
         }
         if (entityTwoLifePart.getLife() == 0) {
@@ -142,7 +137,6 @@ public class CollisionPostProcess implements IPostEntityProcessingService {
             if (entity2 instanceof Enemy) {
                 gameData.setEnemyAmount(gameData.getEnemyAmount() - 1);
                 gameData.setScore(gameData.getScore() + 20);
-                System.out.println(gameData.getScore());//////////////////////////////////////////////////////////////////////////////////
             }
         }
     }

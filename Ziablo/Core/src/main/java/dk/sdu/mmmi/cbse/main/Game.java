@@ -164,27 +164,7 @@ public class Game
     private void draw() {
 
         ML.renderCam(cam);
-
         sr.setProjectionMatrix(cam.combined);
-
-//        for (Entity entity : world.getEntities()) {
-//
-//            sr.setColor(1, 1, 1, 1);
-//
-//            sr.begin(ShapeRenderer.ShapeType.Line);
-//
-//            float[] shapex = entity.getShapeX();
-//            float[] shapey = entity.getShapeY();
-//
-//            for (int i = 0, j = shapex.length - 1;
-//                    i < shapex.length;
-//                    j = i++) {
-//
-//                sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
-//            }
-//
-//            sr.end();
-//        }
     }
 
     @Override

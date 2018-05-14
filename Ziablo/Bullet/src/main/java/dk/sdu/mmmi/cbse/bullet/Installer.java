@@ -15,6 +15,10 @@ public class Installer extends ModuleInstall{
     
     @Override
     public void restored(){
-        System.out.println("Module Bullet Installed");
+        System.out.println("Bullet installed");
+    }
+    @Override
+    public void uninstalled(){
+        System.out.println("Bullet uninstalled");
     }
 }

@@ -32,10 +32,9 @@ import java.util.concurrent.TimeUnit;
 
 public class BulletPlugin implements IGamePluginService, ICreateBullet {
 
-    private Entity bullet;
     private final long periodMilliseconds = 500;
 
-    private long lastTick = 0L; // 1970 will be long before the current time :)
+    private long lastTick = 0L;
 
     @Override
     public void start(GameData gameData, World world) {
@@ -51,8 +50,7 @@ public class BulletPlugin implements IGamePluginService, ICreateBullet {
         float maxSpeed = 300;
         float rotationSpeed = 0;
         PositionPart position = entity.getPart(PositionPart.class);
-        //https://stackoverflow.com/questions/11697364/how-do-i-align-bullets-with-a-gun
-        //https://en.wikipedia.org/wiki/Rotation_%28mathematics%29
+        // Offsetting bullet postion from entity
         float x = (float) (position.getX() + (18 * Math.cos(position.getRadians())) - 1 * Math.sin(position.getRadians()));
         float y = (float) (position.getY() + (18 * Math.sin(position.getRadians())) + 1 * Math.cos(position.getRadians()));
 
@@ -60,15 +58,12 @@ public class BulletPlugin implements IGamePluginService, ICreateBullet {
             Entity projectile = new Bullet();
 
             projectile.add(new PositionPart(x, y, position.getRadians()));
-
             projectile.setRadius(2);
 
-            //cery important to add these parts to the entity, BEFORE calling the entity for getters and setters
             projectile.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
             projectile.add(new LifePart(1, 1));
             world.addEntity(projectile);
         }
-
     }
 
     @Override
@@ -78,6 +73,7 @@ public class BulletPlugin implements IGamePluginService, ICreateBullet {
         }
     }
     
+    // Gives a delay before you can shoot a bullet again the time is placed in the variable periodMilliseconds. 
     private boolean timerCheck(){
         long now = System.nanoTime();
         long diffNanos = now - lastTick;
@@ -88,5 +84,4 @@ public class BulletPlugin implements IGamePluginService, ICreateBullet {
         lastTick = now;
         return true;
     }
-
 }

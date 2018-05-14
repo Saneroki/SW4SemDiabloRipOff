@@ -9,7 +9,6 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.texture.TexturePath;
 import dk.sdu.mmmi.cbse.commonplayer.Player;
-import org.openide.modules.ModuleInstall;
 
 
 import org.openide.util.lookup.ServiceProvider;

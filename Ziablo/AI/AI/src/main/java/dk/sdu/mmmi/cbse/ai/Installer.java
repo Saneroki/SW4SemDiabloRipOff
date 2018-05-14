@@ -11,7 +11,10 @@ public class Installer extends ModuleInstall {
 
     @Override
     public void restored() {
-        // TODO
+        System.out.println("AI installed");
     }
-
+    @Override
+    public void uninstalled(){
+        System.out.println("AI uninstalled");
+    }
 }

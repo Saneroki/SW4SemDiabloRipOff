@@ -42,7 +42,6 @@ public class WallPlugin implements IGamePluginService, ICreateWall {
             wall = (Entity) wallElement;
             world.addEntity(wall);
             i++;
-            System.out.println("hej fra start i væg " + i);
         }
     }
 

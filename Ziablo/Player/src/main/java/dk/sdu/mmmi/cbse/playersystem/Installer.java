@@ -15,10 +15,11 @@ public class Installer extends ModuleInstall{
     
     @Override
     public void restored(){
-        System.out.println("Module Player Installed");
+        System.out.println("Player installed");
     }
-     @Override
+    
+    @Override
     public void uninstalled(){
-        
+        System.out.println("Player uninstalled");
     }
 }

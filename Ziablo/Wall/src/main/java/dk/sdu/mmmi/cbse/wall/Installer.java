@@ -15,10 +15,11 @@ public class Installer extends ModuleInstall{
     
     @Override
     public void restored(){
-        System.out.println("Module Wall Installed");
+        System.out.println("Wall installed");
     }
-     @Override
+    
+    @Override
     public void uninstalled(){
-        
+        System.out.println("Wall uninstalled");
     }
 }

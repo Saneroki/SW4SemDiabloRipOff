@@ -66,7 +66,6 @@ public class ObstaclePlugin implements IGamePluginService, ICreateObstacle {
             world.addEntity(obstacle);
             i++;
         }
-        System.out.println("dk.sdu.mmmi.cbse.enemy.ObstaclePlugin.start()");
     }
 
     @Override
@@ -75,6 +74,5 @@ public class ObstaclePlugin implements IGamePluginService, ICreateObstacle {
         for (Entity obstacle : world.getEntities(Obstacle.class)) {
             world.removeEntity(obstacle);
         }
-        System.out.println("dk.sdu.mmmi.cbse.enemy.ObstaclePlugin.stop()");
     }
 }

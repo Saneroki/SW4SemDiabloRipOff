@@ -13,7 +13,6 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.commonenemy.Enemy;
 import dk.sdu.mmmi.cbse.commonplayer.Player;
-import java.util.Random;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -28,7 +27,7 @@ public class EnemyProcessSystem implements IEntityProcessingService {
     public void process(GameData gameData, World world) {
 
         for (Entity enemy : world.getEntities(Enemy.class)) {
-            
+
             PositionPart positionPart = enemy.getPart(PositionPart.class);
             MovingPart movingPart = enemy.getPart(MovingPart.class);
 
@@ -51,7 +50,7 @@ public class EnemyProcessSystem implements IEntityProcessingService {
                 float y2 = PColY;
 
                 double distance = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
-//                System.out.println(distance);
+
                 if (distance < 300 && distance > 15) {
                     enemy.setFind(true);
                 } else if (distance < 18) {
@@ -59,27 +58,9 @@ public class EnemyProcessSystem implements IEntityProcessingService {
                 } else {
                     enemy.setFind(false);
                 }
-
             }
-
-//            if (i % 2 == 0) {
-//                movingPart.setRight(true);
-//                movingPart.setLeft(false);
-//
-//            } 
-//            if (i % 3 == 0) {
-//                movingPart.setRight(false);
-//                movingPart.setLeft(true);
-//            }
-//
-//            //acceleration/deacceleration
-//            if (i % 5 == 0) {
-//                movingPart.setUp(true);
-//            }
             movingPart.process(gameData, enemy);
             positionPart.process(gameData, enemy);
-
-            updateShape(enemy);
         }
 
     }
@@ -88,39 +69,14 @@ public class EnemyProcessSystem implements IEntityProcessingService {
         if (positionPart.getX() > gameData.getMapWidth()) {
             positionPart.setX(0);
         }
-        if(positionPart.getX() < 0){
+        if (positionPart.getX() < 0) {
             positionPart.setX(gameData.getMapWidth());
         }
         if (positionPart.getY() > gameData.getMapHeight()) {
             positionPart.setY(0);
         }
-        if(positionPart.getY() < 0){
+        if (positionPart.getY() < 0) {
             positionPart.setY(gameData.getMapHeight());
         }
     }
-
-    private void updateShape(Entity entity) {
-        float[] shapex = entity.getShapeX();
-        float[] shapey = entity.getShapeY();
-        PositionPart positionPart = entity.getPart(PositionPart.class);
-        float x = positionPart.getX();
-        float y = positionPart.getY();
-        float radians = positionPart.getRadians();
-
-        shapex[0] = (float) (x + Math.cos(radians) * 8);
-        shapey[0] = (float) (y + Math.sin(radians) * 8);
-
-        shapex[1] = (float) (x + Math.cos(radians - 4 * 3.1415f / 5) * 8);
-        shapey[1] = (float) (y + Math.sin(radians - 4 * 3.1145f / 5) * 8);
-
-        shapex[2] = (float) (x + Math.cos(radians + 3.1415f) * 5);
-        shapey[2] = (float) (y + Math.sin(radians + 3.1415f) * 5);
-
-        shapex[3] = (float) (x + Math.cos(radians + 4 * 3.1415f / 5) * 8);
-        shapey[3] = (float) (y + Math.sin(radians + 4 * 3.1415f / 5) * 8);
-
-        entity.setShapeX(shapex);
-        entity.setShapeY(shapey);
-    }
-
 }

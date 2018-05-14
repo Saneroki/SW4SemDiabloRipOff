@@ -14,11 +14,11 @@ import org.openide.modules.ModuleInstall;
 public class Installer extends ModuleInstall{
     @Override
     public void restored(){
-        System.out.println("HELLOOOO FROM MAP INSTALLER");
+        System.out.println("Map installed");
     }
     
     @Override
     public void uninstalled(){
-        
+        System.out.println("Map uninstalled");
     }
 }

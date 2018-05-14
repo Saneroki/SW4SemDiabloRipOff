@@ -21,7 +21,8 @@ import org.openide.util.Lookup;
 public class MapProcessSystem implements IEntityProcessingService {
 
     private int lastProcessEnemyAmount = 5;
-
+    private int enemyCap = 100;
+    
     @Override
     public void process(GameData gameData, World world) {
         spawnTwoEnemiesIfOneEnmemyDies(gameData, world);
@@ -36,7 +37,7 @@ public class MapProcessSystem implements IEntityProcessingService {
 
     public void spawnTwoEnemiesIfOneEnmemyDies(GameData gameData, World world) {
         int i = 0;
-        if (lastProcessEnemyAmount > gameData.getEnemyAmount()) {
+        if (lastProcessEnemyAmount > gameData.getEnemyAmount() && lastProcessEnemyAmount < enemyCap - 1) {
             while (i < 2) {
                 spawnNewEnemy(gameData, world);
                 i++;

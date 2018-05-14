@@ -8,7 +8,6 @@ package dk.sdu.mmmi.cbse.textureloader;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import dk.sdu.mmmi.cbse.common.data.Entity;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,25 +43,21 @@ public class TextureLoader {
 
                 if (sheet.getService().equals(Enemy.class)) {
                     enemy_idle = ComponentAnimator(loadTexture(sheet.getModule(), sheet.getResource()), 1, 1, 1f);
-                    System.out.println("Texture animation: " + enemy_idle + " " + sheet.getModule());
                     world.removeSprite(sheet);
                 }
 
                 if (sheet.getService().equals(Player.class)) {
                     player_idle = ComponentAnimator(loadTexture(sheet.getModule(), sheet.getResource()), 1, 3, 3f);
-                    System.out.println("Texture animation: " + player_idle + " " + sheet.getModule());
                     world.removeSprite(sheet);
                 }
                 
                 if (sheet.getService().equals(Bullet.class)) {
                     projectile = ComponentAnimator(loadTexture(sheet.getModule(), sheet.getResource()), 1, 1, 1f);
-                    System.out.println("Texture animation: " + projectile + " " + sheet.getModule());
                     world.removeSprite(sheet);
                 }
                 
                 if (sheet.getService().equals(Obstacle.class)) {
                     obstacle = ComponentAnimator(loadTexture(sheet.getModule(), sheet.getResource()), 1, 1, 1f);
-                    System.out.println("Texture animation: " + obstacle + " " + sheet.getModule());
                     world.removeSprite(sheet);
                 }
             }
@@ -80,7 +75,6 @@ public class TextureLoader {
             pixmap = new Pixmap(data, 0, data.length);
             temp_texture = new Texture(pixmap);
             pixmap.dispose();
-            System.out.println("Returned texture : " + temp_texture.getHeight());
             return temp_texture;
         } catch (IOException | NullPointerException ex) {
             ex.printStackTrace();

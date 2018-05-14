@@ -21,7 +21,7 @@ import org.openide.util.Lookup;
 
 /**
  *
- * @author herin
+ * @author Ander
  */
 public class MapLoader {
 

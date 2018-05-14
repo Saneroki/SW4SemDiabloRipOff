@@ -19,23 +19,11 @@ import org.openide.util.lookup.ServiceProvider;
 @ServiceProvider(service = IGamePluginService.class)
 public class CollisionPlugin implements IGamePluginService {
 
-    private Entity entity;
-
     @Override
-    public void start(GameData gameData, World world) {
-        
+    public void start(GameData gameData, World world) {        
     }
-    
-//    private Entity createCollision(GameData gameData){
-//        Entity collision = new Player();
-//        collision.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
-//        collision.add(new PositionPart(x, y, radians));
-//        
-//        return collision;
-//    }
 
     @Override
     public void stop(GameData gameData, World world) {
     }
-
 }

@@ -12,10 +12,8 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
-
 import dk.sdu.mmmi.cbse.commonenemy.Enemy;
 import dk.sdu.mmmi.cbse.commonplayer.Player;
-
 import java.util.Random;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
@@ -45,7 +43,7 @@ public class AiController implements IEntityProcessingService, IGamePluginServic
                 for (Entity p : world.getEntities(Player.class)) {
                     if (e instanceof Enemy) {
                         if (e.getFind()) {
-                            chargeTarget(e, p, world, data);
+                            chargeTarget(e, p, data);
                         } else {
                             walkWithoutPurpose((Enemy) e, data);
                         }
@@ -131,7 +129,7 @@ public class AiController implements IEntityProcessingService, IGamePluginServic
         }
     }
 
-    private void chargeTarget(Entity enemy, Entity player, World world, GameData data) {
+    private void chargeTarget(Entity enemy, Entity player, GameData data) {
         PositionPart posE = enemy.getPart(PositionPart.class);
         MovingPart movE = enemy.getPart(MovingPart.class);
 

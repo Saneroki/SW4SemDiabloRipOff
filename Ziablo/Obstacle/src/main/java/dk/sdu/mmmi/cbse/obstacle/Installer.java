@@ -14,11 +14,11 @@ import org.openide.modules.ModuleInstall;
 public class Installer extends ModuleInstall{
     @Override
     public void restored(){
-        System.out.println("HELLOOOO FROM OBSTACLE INSTALLER");
+        System.out.println("Obstacle installed");
     }
     
     @Override
     public void uninstalled(){
-        
+        System.out.println("Obstacle uninstalled");
     }
 }
